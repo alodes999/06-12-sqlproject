@@ -10,6 +10,8 @@ EIM.execute("CREATE TABLE IF NOT EXISTS ship_names (id INTEGER PRIMARY KEY, ship
 EIM.execute("CREATE TABLE IF NOT EXISTS ship_types (id INTEGER PRIMARY KEY, ship_type TEXT);")
 EIM.execute("CREATE TABLE IF NOT EXISTS ship_locations (id INTEGER PRIMARY KEY, solar_system_name TEXT, station_name TEXT);")
 
+EIM.results_as_hash = true
+
 # `````````````````````````````````````````````````````````````````````````````````````````````````````
 
 
