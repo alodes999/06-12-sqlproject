@@ -1,5 +1,10 @@
 class ShipName
-  
+  # Initializes a ShipName object.  Set with one parameter, the unique "id" of each location.
+  # 
+  # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.
+  # 
+  # We have 1 attribute
+  # => @loc_id - an Integer, that will be used to correlate with the same number id in our table.
   def initialize(name_id)
     @name_id = name_id
   end
