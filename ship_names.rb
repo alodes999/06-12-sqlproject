@@ -27,4 +27,33 @@ class ShipName
   def self.delete_ship(id_to_delete)
     EIG.execute("DELETE FROM ship_names WHERE id = #{id_to_delete};")
   end
+  # Shows the row corresponding to the instantiated id of the object.
+  #
+  # Accepts no arguments
+  # 
+  # Returns the hash of the row the instantiated id refers to
+  def show_info
+    EIG.execute("SELECT * FROM ship_names WHERE id = @{name_id};")
+  end
+  
+  def change_method(column_to_change, value_to_change_to)
+    EIG.execute("UPDATE ship_names SET '#{column_to_change}' = #{value_to_change} WHERE id = #{name_id};")
+  end
+  
+  def change_name(new_ship_name)
+    change_method('name', '#{new_ship_name}')
+  end
+  
+  def change_cost(new_ship_cost)
+    change_method('cost', new_ship_cost)
+  end
+  
+  def change_type(new_ship_type)
+    change_method('ship_types_id', new_ship_type)
+  end
+  
+  def change_location(new_ship_location)
+    change_method('ship_locations_id', new_ship_location)
+  end
+  
 end
