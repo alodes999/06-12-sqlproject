@@ -14,4 +14,57 @@ EIM.results_as_hash = true
 
 # `````````````````````````````````````````````````````````````````````````````````````````````````````
 
+puts "Hello!  What would you like to do today?"
+puts "1 - Enter a new ship"
+puts "2 - Enter a new ship location"
+puts "3 - Enter a new ship type"
+puts "4 - Change a ship name"
+puts "5 - Change the cost of a ship"
+puts "6 - Assign a new system for a ship"
+puts "7 - Assign a new station for a ship"
+puts "8 - Change a ship type"
+puts "9 - Change a system name"
+puts "10 - Change a system station name"
+puts "15 - Quit"
 
+choice = gets.chomp.to_i
+while choice != 15
+  while choice > 10 && < 15
+    puts "That is an invalid choice, please reenter a choice"
+    choice = gets.chomp.to_i
+  end
+  case choice
+  when 1
+    
+  when 2
+    
+  when 3
+    
+  when 4
+    
+  when 5
+    
+  when 6
+    
+  when 7
+    
+  when 8
+    
+  when 9
+    
+  when 10
+    
+  end
+  puts "What would you like to do now?"
+  puts "1 - Enter a new ship"
+  puts "2 - Enter a new ship location"
+  puts "3 - Enter a new ship type"
+  puts "4 - Change a ship name"
+  puts "5 - Change the cost of a ship"
+  puts "6 - Assign a new system for a ship"
+  puts "7 - Assign a new station for a ship"
+  puts "9 - Quit"
+  choice = gets.chomp.to_i
+end
+    
+    
