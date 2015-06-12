@@ -35,23 +35,44 @@ class ShipName
   def show_info
     EIG.execute("SELECT * FROM ship_names WHERE id = @{name_id};")
   end
-  
+  # Generalized change method for the ship_names Class.
+  # 
+  # This method accepts 2 arguments, column_to_change, the name of the column we want to modify
+  # and value_to_change_to, either a String, or an Integer, depending on which column we edit
+  # 
+  # This method returns the changed value in the table.
   def change_method(column_to_change, value_to_change_to)
     EIG.execute("UPDATE ship_names SET '#{column_to_change}' = #{value_to_change} WHERE id = #{name_id};")
   end
-  
+  # Specific change method for the ship_name column.
+  #
+  # This method accepts 1 argument, new_ship_name, the String which to change the column value to
+  #
+  # This returns the changed value in the table
   def change_name(new_ship_name)
-    change_method('name', '#{new_ship_name}')
+    change_method('ship_name', '#{new_ship_name}')
   end
-  
+  # Specific change method for the cost column.
+  #
+  # This method accepts 1 argument, new_ship_cost, the Integer which to change the column value to
+  #
+  # This returns the changed value in the table  
   def change_cost(new_ship_cost)
     change_method('cost', new_ship_cost)
   end
-  
+  # Specific change method for the ship_type_id column.
+  #
+  # This method accepts 1 argument, new_ship_type, the Integer which to change the column value to
+  #
+  # This returns the changed value in the table
   def change_type(new_ship_type)
     change_method('ship_types_id', new_ship_type)
   end
-  
+  # Specific change method for the ship_location_id column.
+  #
+  # This method accepts 1 argument, new_ship_location, the Integer which to change the column value to
+  #
+  # This returns the changed value in the table
   def change_location(new_ship_location)
     change_method('ship_locations_id', new_ship_location)
   end
