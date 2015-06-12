@@ -42,18 +42,27 @@ class ShipLocation
   end
   # Changes the name of the currently selected (the instantiated object's referenced) system location name
   #
-  # Accepts 1 argument, a String containing the new system name
+  # Accepts 1 argument, a String containing the new system name.  Calls our change_general method to accomplish the change
   # 
   # Returns [] in our terminal, changing the solar_system_name for the designated location id
   def change_system(new_sys_name)
-    EIG.execute("UPDATE ship_locations SET solar_system_name = '#{new_sys_name}' WHERE id = #{@loc_id};")
+    change_general('solar_system_name', new_sys_name)
   end
   # Changes the name of the currently selected (the instantiated object's referenced) system station name
   #
-  # Accepts 1 argument, a String containing the new station name
+  # Accepts 1 argument, a String containing the new station name.  Calls our change_general method to accomplish the change
   # 
   # Returns [] in our terminal, changing the station_name for the designated location id
   def change_station(new_stat_name)
-    EIG.execute("UPDATE ship_locations SET station_name = '#{new_stat_name} WHERE id = #{@loc_id};")
+    change_general('station_name', new_stat_name)
+  end
+  # Refactored change methods.
+  # 
+  # Accepts 2 arguments, the column_to_change, and the value_to_change.  The calling method for this will pick
+  # the correct column_to_change, and the value to change.
+  # 
+  # Returns [], changing the appropriate value for our designated location id
+  def change_general(column_to_change, value_to_change)
+    EIG.execute("UPDATE ship_locations SET '#{column_to_change}' = '#{value_to_change}' WHERE id = #{@loc_id};")
   end
 end
