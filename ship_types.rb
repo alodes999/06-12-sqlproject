@@ -11,7 +11,7 @@ class ShipType
   def self.all
     EIG.execute("SELECT * FROM ship_types;")
   end
-  # Adds a new entry into the ship_locations table
+  # Adds a new entry into the ship_types table
   #
   # Accepts 1 argument, a String for the ship_type
   #
@@ -39,7 +39,7 @@ class ShipType
   # 
   # Accepts 1 arguments, type_change.  This will change the ship_type for the referenced type_id
   # 
-  # Returns [], changing the appropriate value for our designated location id
+  # Returns [], changing the ship_type for our designated location id
   def change_type(type_change)
     EIG.execute("UPDATE ship_types SET ship_type = '#{type_change}' WHERE id = #{@type_id};")
   end
