@@ -37,7 +37,7 @@ class ShipLocation
   # Accepts no arguments, only passing the defined argument from instantiation to this method
   #
   # Returns a list of ships currently at the location referenced in our @loc_id attribute
-  def ships
+  def ships_where_stored
     EIG.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@loc_id};")
   end
   # Changes the name of the currently selected (the instantiated object's referenced) system location name

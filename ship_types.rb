@@ -32,7 +32,7 @@ class ShipType
   # Accepts no arguments, only passing the defined argument from instantiation to this method
   #
   # Returns a list of ships that are the ship_type referenced in our @loc_id attribute
-  def ships
+  def ships_where_type_matches
     EIG.execute("SELECT * FROM ship_names WHERE ship_types = #{@type_id};")
   end
   # Change method for ship_type.
@@ -43,5 +43,4 @@ class ShipType
   def change_type(type_change)
     EIG.execute("UPDATE ship_types SET ship_type = '#{type_change}' WHERE id = #{@type_id};")
   end
- 
 end
