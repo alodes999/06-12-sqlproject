@@ -39,7 +39,7 @@ class ShipType
   #
   # Returns a list of ships that are the ship_type referenced in our @loc_id attribute
   def ships_where_type_matches
-    EIM.execute("SELECT * FROM ship_names WHERE ship_types = #{@type_id};")
+    EIM.execute("SELECT * FROM ship_names WHERE ship_types_id = #{@type_id};")
   end
   # Change method for ship_type.
   # 

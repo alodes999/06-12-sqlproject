@@ -2,7 +2,6 @@ require 'sqlite3'
 require_relative 'ship_names'
 require_relative 'ship_types'
 require_relative 'ship_locations'
-require_relative 'lists'
 # EIM is my acronym for 'EVE Inventory Management', the appended project name onto my EVE thought process
 # for the project
 EIM = SQLite3::Database.new('eim.db')
@@ -235,6 +234,7 @@ while choice != 9
       del_type = ShipType.new(del_choice)
       if del_type.ships_where_type_matches.length > 0
         puts "There are ships associated with that type.  Please reassign those ships before deleting that type!"
+        puts "Returning to the Main Menu."
       else
         puts "Ok, deleting ship #{del_choice} from the types table.  Are you sure? Put y or n."
         dbl_check = gets.chomp
@@ -252,6 +252,7 @@ while choice != 9
       del_ship = ShipLocation.new(del_choice)
       if del_ship.ships_where_stored.length > 0
         puts "There are ships associated with that location.  Please reassign those ships before deleting that type!"
+        puts "Returning to the Main Menu"
       else
         puts "Ok, deleting ship #{del_choice} from the locations table.  Are you sure? Put y or n."
         dbl_check = gets.chomp
