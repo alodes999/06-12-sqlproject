@@ -127,7 +127,7 @@ while choice != 9
       puts "9 - Go back"
       
       listchoice = gets.chomp.to_i
-      while bad_choice_fourlist?(listchoice) || listchoice > 9 || listchoice == 0      
+      while bad_choice_fourlist.include?(listchoice) || listchoice > 9 || listchoice == 0      
         puts "That is not a valid option, please reenter an option"
         listchoice = gets.chomp.to_i
       end
