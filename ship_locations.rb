@@ -14,7 +14,7 @@ class ShipLocation
   # 
   # Returns an array of hashes showing all entries in the ship_locations table.
   def self.all
-    EIG.execute("SELECT * FROM ship_locations;")
+    EIM.execute("SELECT * FROM ship_locations;")
   end
   # Adds a new entry into the ship_locations table
   #
@@ -22,7 +22,7 @@ class ShipLocation
   #
   # Returns [] in our terminal, and adds the row to our ship_locations table.
   def self.add_location(solsysloc)
-    EIG.execute("INSERT INTO ship_locations (solar_system_name) VALUES ('#{solsysloc}');")
+    EIM.execute("INSERT INTO ship_locations (solar_system_name) VALUES ('#{solsysloc}');")
   end
   # Deletes a given entry in our ship_locations table
   # 
@@ -30,7 +30,7 @@ class ShipLocation
   # 
   # Returns [] in our terminal, and deletes the row from our ship_locations table
   def self.delete_location(id_to_delete)
-    EIG.execute("DELETE FROM ship_locations WHERE id = #{id_to_delete};")
+    EIM.execute("DELETE FROM ship_locations WHERE id = #{id_to_delete};")
   end
   # Lists the ships at the location referenced with this object's instantiation
   # 
@@ -38,7 +38,7 @@ class ShipLocation
   #
   # Returns a list of ships currently at the location referenced in our @loc_id attribute
   def ships_where_stored
-    EIG.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@loc_id};")
+    EIM.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@loc_id};")
   end
   # Change method.
   # 
@@ -46,6 +46,6 @@ class ShipLocation
   # 
   # Returns [], changing the appropriate value for our designated location id
   def change_location(value_to_change)
-    EIG.execute("UPDATE ship_locations SET solar_system_name = '#{value_to_change}' WHERE id = #{@loc_id};")
+    EIM.execute("UPDATE ship_locations SET solar_system_name = '#{value_to_change}' WHERE id = #{@loc_id};")
   end
 end

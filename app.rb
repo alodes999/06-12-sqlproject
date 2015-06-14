@@ -7,20 +7,21 @@ require_relative 'lists'
 # for the project
 EIM = SQLite3::Database.new('eim.db')
 
-EIM.execute("CREATE TABLE IF NOT EXISTS ship_names (id INTEGER PRIMARY KEY, ship_name TEXT, cost INTEGER, ship_types_id FOREIGN KEY, ship_locations_id FOREIGN KEY);")
+EIM.execute("CREATE TABLE IF NOT EXISTS ship_names (id INTEGER PRIMARY KEY, ship_name TEXT, cost INTEGER, ship_types_id INTEGER, ship_locations_id INTEGER, FOREIGN KEY(ship_types_id) REFERENCES ship_types(id) , FOREIGN KEY(ship_locations_id) REFERENCES ship_locations(id));")
 EIM.execute("CREATE TABLE IF NOT EXISTS ship_types (id INTEGER PRIMARY KEY, ship_type TEXT);")
 EIM.execute("CREATE TABLE IF NOT EXISTS ship_locations (id INTEGER PRIMARY KEY, solar_system_name TEXT);")
 
 EIM.results_as_hash = true
 
 # `````````````````````````````````````````````````````````````````````````````````````````````````````
+wrong_choice = (5..8)
 
 puts "Hello! What would you like to do today?"
 ShipLists.main_menu
 puts "Please enter a menu option:"
 choice = gets.chomp.to_i
 while choice != 9
-  while choice != 1..4
+  while wrong_choice.include?(choice) || choice > 9 || choice == 0 
     puts "That is not a valid option, please reenter an option"
     choice = gets.chomp.to_i
   end
@@ -150,6 +151,7 @@ while choice != 9
         puts "Ok, deletion confirmed! Deleting record #{del_choice}"
         ShipType.delete_type(del_choice)
         puts "Ok, deleted record #{del_choice} from the list."
+      end
     elsif 3
       puts "Ok, which location would you like to delete? Please enter the id of the ship location:"
       del_choice = gets.chomp.to_i
@@ -162,11 +164,12 @@ while choice != 9
         puts "Ok, deletion confirmed! Deleting record #{del_choice}"
         ShipLocation.delete_location(del_choice)
         puts "Ok, deleted record #{del_choice} from the list."
+      end
     else
       puts "Ok, back to the top!"
     end
   end
-  
+  puts "Main Menu"
   ShipLists.main_menu
   puts "What would you like to do next?"
   choice = gets.chomp.to_i

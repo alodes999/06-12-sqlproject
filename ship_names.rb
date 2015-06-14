@@ -15,7 +15,7 @@ class ShipName
   # 
   # Returns an array of hashes showing all entries in the ship_names table.
   def self.all
-    EIG.execute("SELECT * FROM ship_names;")
+    EIM.execute("SELECT * FROM ship_names;")
   end
   # Adds a new entry into the ship_names table
   #
@@ -23,7 +23,7 @@ class ShipName
   #
   # Returns [] in our terminal, and adds the row to our ship_names table.
   def self.add_ship(shipname, shipcost, type_id, loc_id)
-    EIG.execute("INSERT INTO ship_names (ship_name, cost, ship_types_id, ship_locations_id) VALUES ('#{shipname}', #{shipcost}, #{type_id}, #{loc_id});")
+    EIM.execute("INSERT INTO ship_names (ship_name, cost, ship_types_id, ship_locations_id) VALUES ('#{shipname}', #{shipcost}, #{type_id}, #{loc_id});")
   end
   # Deletes a given entry in our ship_names table
   # 
@@ -31,7 +31,7 @@ class ShipName
   # 
   # Returns [] in our terminal, and deletes the row from our ship_names table
   def self.delete_ship(id_to_delete)
-    EIG.execute("DELETE FROM ship_names WHERE id = #{id_to_delete};")
+    EIM.execute("DELETE FROM ship_names WHERE id = #{id_to_delete};")
   end
   # Shows the row corresponding to the instantiated id of the object.
   #
@@ -39,7 +39,7 @@ class ShipName
   # 
   # Returns the hash of the row the instantiated id refers to
   def show_info
-    EIG.execute("SELECT * FROM ship_names WHERE id = @{name_id};")
+    EIM.execute("SELECT * FROM ship_names WHERE id = @{name_id};")
   end
   # Generalized change method for the ship_names Class.
   # 
@@ -48,7 +48,7 @@ class ShipName
   # 
   # This method returns the changed value in the table.
   def change_method(column_to_change, value_to_change_to)
-    EIG.execute("UPDATE ship_names SET '#{column_to_change}' = #{value_to_change} WHERE id = #{name_id};")
+    EIM.execute("UPDATE ship_names SET '#{column_to_change}' = #{value_to_change} WHERE id = #{name_id};")
   end
   # Specific change method for the ship_name column.
   #

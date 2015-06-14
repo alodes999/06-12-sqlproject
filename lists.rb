@@ -45,18 +45,22 @@ module ShipLists
   end
   
   def self.list_choice
+    bad_choice = (4..8)
     listchoice = gets.chomp.to_i
-    while listchoice != 1..3 || choice != 9
+    while bad_choice.include?(listchoice) || listchoice > 9 || listchoice == 0
       puts "That is not a valid option, please reenter an option"
       listchoice = gets.chomp.to_i
     end
+    listchoiceß
   end
   
   def self.list_choice_three_one
+    bad_choice = (5..8)
     listchoice = gets.chomp.to_i
-    while listchoice != 1..4 || choice != 9
+    while bad_choice.include?(listchoice) || listchoice > 9 || listchoice == 0      
       puts "That is not a valid option, please reenter an option"
       listchoice = gets.chomp.to_i
     end
+    listchoice
   end
 end
