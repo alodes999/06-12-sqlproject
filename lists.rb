@@ -51,7 +51,7 @@ module ShipLists
       puts "That is not a valid option, please reenter an option"
       listchoice = gets.chomp.to_i
     end
-    listchoiceß
+    listchoice
   end
   
   def self.list_choice_three_one
