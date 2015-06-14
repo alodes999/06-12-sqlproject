@@ -1,4 +1,5 @@
 class ShipLocation
+  attr_accessor :loc_id
   # Initializes a ShipLocation object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.

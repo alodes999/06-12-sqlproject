@@ -1,4 +1,5 @@
 class ShipType
+  attr_accessor :type_id
   # Initializes a ShipType object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.

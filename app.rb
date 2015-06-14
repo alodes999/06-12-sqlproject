@@ -14,14 +14,20 @@ EIM.execute("CREATE TABLE IF NOT EXISTS ship_locations (id INTEGER PRIMARY KEY, 
 EIM.results_as_hash = true
 
 # `````````````````````````````````````````````````````````````````````````````````````````````````````
-wrong_choice = (5..8)
+bad_choice_threelist = (4..8)
+bad_choice_fourlist = (5..8)
+bad_choice_fivelist = (6..8)
 
 puts "Hello! What would you like to do today?"
-ShipLists.main_menu
+puts "1 - Look at a list"
+puts "2 - Enter a new record"
+puts "3 - Change a record"
+puts "4 - Delete a record"
+puts "9 - Quit"
 puts "Please enter a menu option:"
 choice = gets.chomp.to_i
 while choice != 9
-  while wrong_choice.include?(choice) || choice > 9 || choice == 0 
+  while bad_choice_fourlist.include?(choice) || choice > 9 || choice == 0 
     puts "That is not a valid option, please reenter an option"
     choice = gets.chomp.to_i
   end
@@ -29,29 +35,50 @@ while choice != 9
   case choice
   when 1
     puts "Which list would you like to look at?"
-    ShipLists.option_one
-    ShipLists.list_choice
-    if 1
+    puts "1 - Look at ships list"
+    puts "2 - Look at ship types list"
+    puts "3 - Look at ship locations list"
+    puts "9 - Go back"
+    
+    listchoice = gets.chomp.to_i
+    while bad_choice_threelist.include?(listchoice) || listchoice > 9 || listchoice == 0
+      puts "That is not a valid option, please reenter an option"
+      listchoice = gets.chomp.to_i
+    end
+    
+    case listchoice
+    when 1
       ShipName.all
-    elsif 2
+    when 2
       ShipType.all
-    elsif 3
+    when 3
       ShipLocation.all
-    else
+    when 9
       puts "Ok, back to the top!"
     end
+    
   when 2
     puts "What entry would you like to make?"
-    ShipLists.option_two
-    ShipLists.list_choice
-    if 1
+    puts "1 - Enter a new ship type"
+    puts "2 - Enter a new ship location"
+    puts "3 - Enter a new ship"
+    puts "9 - Go back"
+    
+    listchoice = gets.chomp.to_i
+    while bad_choice_threelist.include?(listchoice) || listchoice > 9 || listchoice == 0
+      puts "That is not a valid option, please reenter an option"
+      listchoice = gets.chomp.to_i
+    end
+    
+    case listchoice
+    when 1
       puts "Ok, what ship type would you like to add?"
       type = gets.chomp
       
       puts "Ok, adding #{type}!"
       ShipType.add_type(type)
       puts "Alright, type added to the list!"
-    elsif 2
+    when 2
       puts "Ok, what system would you like to add?"
       system = gets.chomp
       puts "And what station?"
@@ -60,7 +87,7 @@ while choice != 9
       puts "Ok, adding #{system}, #{station} to the list!"
       ShipLocation.add_location("#{system}, #{station}")
       puts "Alright, location added to the list!"
-    elsif 3
+    when 3
       puts "Ok, what's the ship name would you like to add?"
       name = gets.chomp
       puts "And what is the cost of this ship?"
@@ -73,18 +100,39 @@ while choice != 9
       puts "Ok, adding #{name} to the list!"
       ShipName.add_ship(name, cost, typeid, locid)
       puts "Alright, added #{name} to the list!"
-    else
+    when 9
       puts "Ok, back to the top!"
     end
   
   when 3
     puts "What would you like to change?"
-    ShipLists.option_three
-    ShipLists.list_choice
-    if 1
+    puts "1 - Change a ship record"
+    puts "2 - Change a location record"
+    puts "3 - Change a ship type record"
+    puts "9 - Go back"
+    
+    listchoice = gets.chomp.to_i
+    while bad_choice_threelist.include?(listchoice) || listchoice > 9 || listchoice == 0
+      puts "That is not a valid option, please reenter an option"
+      listchoice = gets.chomp.to_i
+    end
+    
+    case listchoice
+    when 1
       puts "Ok, how would you like to modify a ship entry?"
-      ShipLists.option_three_one
-      ShipLists.list_choice_three_one
+      puts "1 - Change a ship name"
+      puts "2 - Change a ship cost"
+      puts "3 - Change a ship type"
+      puts "4 - Change a ship location"
+      puts "9 - Go back"
+      
+      listchoice = gets.chomp.to_i
+      while bad_choice_fourlist?(listchoice) || listchoice > 9 || listchoice == 0      
+        puts "That is not a valid option, please reenter an option"
+        listchoice = gets.chomp.to_i
+      end
+      
+      case listchoice
       if 1
       
       elsif 2
@@ -96,7 +144,7 @@ while choice != 9
       else
         
       end
-    elsif 2
+    when 2
       puts "Ok, what entry do you want to modify?"
       entry_choice = gets.chomp.to_i
       puts "Ok, and what do you want to change the type to?"
@@ -106,7 +154,7 @@ while choice != 9
       type_to_change = ShipType.new(entry_choice)
       type_to_change.change_type(new_type)
       puts "Ok, that ship type has been changed to #{new_type}!"
-    elsif 3
+    when 3
       puts "Ok, what entry do you want to modify?"
       entry_choice = gets.chomp.to_i
       puts "And what do you want to change the system to?"
@@ -118,15 +166,25 @@ while choice != 9
       loc_to_change = ShipLocation.new(entry_choice)
       loc_to_change.change_location("#{new_sys}, #{new_stat}")
       puts "Ok, that location has been changed to #{new_sys}, #{new_stat}!"
-    else
+    when 9
       puts "Ok, back to the top!"
     end
   
   when 4
     puts "What would you like to delete?"
-    ShipLists.option_four
-    ShipLists.list_choice
-    if 1
+    puts "1 - Delete a ship record"
+    puts "2 - Delete a ship type"
+    puts "3 - Delete a ship location"
+    puts "9 - Go back"
+    
+    listchoice = gets.chomp.to_i
+    while bad_choice_threelist.include?(listchoice) || listchoice > 9 || listchoice == 0
+      puts "That is not a valid option, please reenter an option"
+      listchoice = gets.chomp.to_i
+    end
+    
+    case listchoice
+    when 1
       puts "Ok, which ship would you like to delete? Please enter the id of the ship:"
       del_choice = gets.chomp.to_i
       
@@ -139,7 +197,7 @@ while choice != 9
         ShipName.delete_ship(del_choice)
         puts "Ok, deleted record #{del_choice} from the list."
       end
-    elsif 2
+    when 2
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
       del_choice = gets.chomp.to_i
       
@@ -152,7 +210,7 @@ while choice != 9
         ShipType.delete_type(del_choice)
         puts "Ok, deleted record #{del_choice} from the list."
       end
-    elsif 3
+    when 3
       puts "Ok, which location would you like to delete? Please enter the id of the ship location:"
       del_choice = gets.chomp.to_i
       
@@ -165,12 +223,17 @@ while choice != 9
         ShipLocation.delete_location(del_choice)
         puts "Ok, deleted record #{del_choice} from the list."
       end
-    else
+    when 9
       puts "Ok, back to the top!"
     end
   end
   puts "Main Menu"
-  ShipLists.main_menu
+  puts "1 - Look at a list"
+  puts "2 - Enter a new record"
+  puts "3 - Change a record"
+  puts "4 - Delete a record"
+  puts "9 - Quit"
+  
   puts "What would you like to do next?"
   choice = gets.chomp.to_i
 end
