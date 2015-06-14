@@ -232,8 +232,8 @@ while choice != 9
     when 2
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
       del_choice = gets.chomp.to_i
-      
-      if ShipType.ships_where_type_matches.length > 0
+      del_type = ShipType.new(del_choice)
+      if del_type.ships_where_type_matches.length > 0
         puts "There are ships associated with that type.  Please reassign those ships before deleting that type!"
       else
         puts "Ok, deleting ship #{del_choice} from the types table.  Are you sure? Put y or n."
@@ -249,8 +249,8 @@ while choice != 9
     when 3
       puts "Ok, which location would you like to delete? Please enter the id of the ship location:"
       del_choice = gets.chomp.to_i
-      
-      if ShipLocation.ships_where_stored.length > 0
+      del_ship = ShipLocation.new(del_choice)
+      if del_ship.ships_where_stored.length > 0
         puts "There are ships associated with that location.  Please reassign those ships before deleting that type!"
       else
         puts "Ok, deleting ship #{del_choice} from the locations table.  Are you sure? Put y or n."
