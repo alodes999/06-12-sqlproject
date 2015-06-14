@@ -133,15 +133,15 @@ while choice != 9
       end
       
       case listchoice
-      if 1
+      when 1
       
-      elsif 2
+      when 2
         
-      elsif 3
+      when 3
         
-      elsif 4
+      when 4
         
-      else
+      when 9
         
       end
     when 2
