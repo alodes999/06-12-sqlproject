@@ -21,8 +21,8 @@ class ShipLocation
   # Accepts 2 arguments, solsysloc, a String for the system name, and stationname, a String for the station in the given system.
   #
   # Returns [] in our terminal, and adds the row to our ship_locations table.
-  def self.add_location(solsysloc, stationname)
-    EIG.execute("INSERT INTO ship_locations (solar_system_name) VALUES ('#{solsysloc}', '#{stationname}');")
+  def self.add_location(solsysloc)
+    EIG.execute("INSERT INTO ship_locations (solar_system_name) VALUES ('#{solsysloc}');")
   end
   # Deletes a given entry in our ship_locations table
   # 
@@ -40,29 +40,12 @@ class ShipLocation
   def ships_where_stored
     EIG.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@loc_id};")
   end
-  # Changes the name of the currently selected (the instantiated object's referenced) system location name
-  #
-  # Accepts 1 argument, a String containing the new system name.  Calls our change_general method to accomplish the change
+  # Change method.
   # 
-  # Returns [] in our terminal, changing the solar_system_name for the designated location id
-  def change_system(new_sys_name)
-    change_general('solar_system_name', new_sys_name)
-  end
-  # Changes the name of the currently selected (the instantiated object's referenced) system station name
-  #
-  # Accepts 1 argument, a String containing the new station name.  Calls our change_general method to accomplish the change
-  # 
-  # Returns [] in our terminal, changing the station_name for the designated location id
-  def change_station(new_stat_name)
-    change_general('station_name', new_stat_name)
-  end
-  # Refactored change methods.
-  # 
-  # Accepts 2 arguments, the column_to_change, and the value_to_change.  The calling method for this will pick
-  # the correct column_to_change, and the value to change.
+  # Accepts 1 argument, the value_to_change.  This will change the record to the entered value to change.
   # 
   # Returns [], changing the appropriate value for our designated location id
-  def change_general(column_to_change, value_to_change)
-    EIG.execute("UPDATE ship_locations SET '#{column_to_change}' = '#{value_to_change}' WHERE id = #{@loc_id};")
+  def change_location(value_to_change)
+    EIG.execute("UPDATE ship_locations SET solar_system_name = '#{value_to_change}' WHERE id = #{@loc_id};")
   end
 end
