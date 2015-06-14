@@ -156,8 +156,8 @@ while choice != 9
       when 3
         puts "What's the id of the ship you want to change?"
         id_to_change = gets.chomp.to_i
-        puts "What's the new ship type?"
-        new_type = gets.chomp
+        puts "What's the id of the new ship type?"
+        new_type = gets.chomp.to_i
         
         puts "Ok, changing type to #{new_type}"
         ship_to_change = ShipName.new(id_to_change)
@@ -166,14 +166,12 @@ while choice != 9
       when 4
         puts "What's the id of the ship you want to change?"
         id_to_change = gets.chomp.to_i
-        puts "Where is the new system?"
-        new_sys = gets.chomp
-        putes "And the new station?"
-        new_stat = gets.chomp
+        puts "What is the new location id?"
+        new_loc = gets.chomp.to_i
         
-        puts "Ok, changing location to #{new_sys} - #{new_stat}"
+        puts "Ok, changing location to #{new_loc}" 
         ship_to_change = ShipName.new(id_to_change)
-        ship_to_change.change_name("#{new_sys} - #{new_stat}")
+        ship_to_change.change_name(new_loc)
         puts "Alright!  Location changed!"
       when 9
         puts "Ok, back to the top!"
