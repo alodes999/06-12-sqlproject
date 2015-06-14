@@ -107,8 +107,8 @@ while choice != 9
   when 3
     puts "What would you like to change?"
     puts "1 - Change a ship record"
-    puts "2 - Change a location record"
-    puts "3 - Change a ship type record"
+    puts "2 - Change a ship type record"
+    puts "3 - Change a location record"
     puts "9 - Go back"
     
     listchoice = gets.chomp.to_i
@@ -171,7 +171,7 @@ while choice != 9
         
         puts "Ok, changing location to #{new_loc}" 
         ship_to_change = ShipName.new(id_to_change)
-        ship_to_change.change_name(new_loc)
+        ship_to_change.change_location(new_loc)
         puts "Alright!  Location changed!"
       when 9
         puts "Ok, back to the top!"
@@ -233,27 +233,35 @@ while choice != 9
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
       del_choice = gets.chomp.to_i
       
-      puts "Ok, deleting ship #{del_choice} from the types table.  Are you sure? Put y or n."
-      dbl_check = gets.chomp
-      if dbl_check.downcase != "y"
-        puts "Ok, back to the top!"
+      if ShipType.ships_where_type_matches.length > 0
+        puts "There are ships associated with that type.  Please reassign those ships before deleting that type!"
       else
-        puts "Ok, deletion confirmed! Deleting record #{del_choice}"
-        ShipType.delete_type(del_choice)
-        puts "Ok, deleted record #{del_choice} from the list."
+        puts "Ok, deleting ship #{del_choice} from the types table.  Are you sure? Put y or n."
+        dbl_check = gets.chomp
+        if dbl_check.downcase != "y"
+          puts "Ok, back to the top!"
+        else
+          puts "Ok, deletion confirmed! Deleting record #{del_choice}"
+          ShipType.delete_type(del_choice)
+          puts "Ok, deleted record #{del_choice} from the list."
+        end
       end
     when 3
       puts "Ok, which location would you like to delete? Please enter the id of the ship location:"
       del_choice = gets.chomp.to_i
       
-      puts "Ok, deleting ship #{del_choice} from the locations table.  Are you sure? Put y or n."
-      dbl_check = gets.chomp
-      if dbl_check.downcase != "y"
-        puts "Ok, back to the top!"
+      if ShipLocation.ships_where_stored.length > 0
+        puts "There are ships associated with that location.  Please reassign those ships before deleting that type!"
       else
-        puts "Ok, deletion confirmed! Deleting record #{del_choice}"
-        ShipLocation.delete_location(del_choice)
-        puts "Ok, deleted record #{del_choice} from the list."
+        puts "Ok, deleting ship #{del_choice} from the locations table.  Are you sure? Put y or n."
+        dbl_check = gets.chomp
+        if dbl_check.downcase != "y"
+          puts "Ok, back to the top!"
+        else
+          puts "Ok, deletion confirmed! Deleting record #{del_choice}"
+          ShipLocation.delete_location(del_choice)
+          puts "Ok, deleted record #{del_choice} from the list."
+        end
       end
     when 9
       puts "Ok, back to the top!"

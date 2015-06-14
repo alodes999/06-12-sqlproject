@@ -47,8 +47,8 @@ class ShipName
   # and value_to_change_to, either a String, or an Integer, depending on which column we edit
   # 
   # This method returns the changed value in the table.
-  def change_method(column_to_change, value_to_change_to)
-    EIM.execute("UPDATE ship_names SET '#{column_to_change}' = #{value_to_change} WHERE id = #{name_id};")
+  def change_method(column_to_change, value_to_change)
+    EIM.execute("UPDATE ship_names SET '#{column_to_change}' = '#{value_to_change}' WHERE id = #{name_id};")
   end
   # Specific change method for the ship_name column.
   #
@@ -56,7 +56,7 @@ class ShipName
   #
   # This returns the changed value in the table
   def change_name(new_ship_name)
-    change_method('ship_name', '#{new_ship_name}')
+    change_method('ship_name', new_ship_name)
   end
   # Specific change method for the cost column.
   #
