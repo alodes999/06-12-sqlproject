@@ -48,11 +48,11 @@ while choice != 9
     
     case listchoice
     when 1
-      ShipName.all
+      puts ShipName.all
     when 2
-      ShipType.all
+      puts ShipType.all
     when 3
-      ShipLocation.all
+      puts ShipLocation.all
     when 9
       puts "Ok, back to the top!"
     end
@@ -134,15 +134,49 @@ while choice != 9
       
       case listchoice
       when 1
-      
+        puts "What's the id of the ship you want to change?"
+        id_to_change = gets.chomp.to_i
+        puts "What's the new ship name?"
+        new_name = gets.chomp
+        
+        puts "Ok, changing name to #{new_name}"
+        ship_to_change = ShipName.new(id_to_change)
+        ship_to_change.change_name(new_name)
+        puts "Alright!  Name changed!"
       when 2
+        puts "What's the id of the ship you want to change?"
+        id_to_change = gets.chomp.to_i
+        puts "What's the new ship cost?"
+        new_cost = gets.chomp.to_i
         
+        puts "Ok, changing cost to #{new_cost}"
+        ship_to_change = ShipName.new(id_to_change)
+        ship_to_change.change_cost(new_cost)
+        puts "Alright!  Cost changed!"
       when 3
+        puts "What's the id of the ship you want to change?"
+        id_to_change = gets.chomp.to_i
+        puts "What's the new ship type?"
+        new_type = gets.chomp
         
+        puts "Ok, changing type to #{new_type}"
+        ship_to_change = ShipName.new(id_to_change)
+        ship_to_change.change_type(new_type)
+        puts "Alright!  Type changed!"
       when 4
+        puts "What's the id of the ship you want to change?"
+        id_to_change = gets.chomp.to_i
+        puts "Where is the new system?"
+        new_sys = gets.chomp
+        putes "And the new station?"
+        new_stat = gets.chomp
         
+        puts "Ok, changing location to #{new_sys} - #{new_stat}"
+        ship_to_change = ShipName.new(id_to_change)
+        ship_to_change.change_name("#{new_sys} - #{new_stat}")
+        puts "Alright!  Location changed!"
       when 9
-        
+        puts "Ok, back to the top!"
       end
     when 2
       puts "Ok, what entry do you want to modify?"
