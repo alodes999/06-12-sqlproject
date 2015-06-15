@@ -76,7 +76,7 @@ while choice != 9
       type_to_look = ShipType.new(type_id)
       puts type_to_look.ships_where_type_matches
     when 5
-      puts "What type id should we look up?"
+      puts "What location id should we look up?"
       loc_id = gets.chomp.to_i
       loc_to_look = ShipLocation.new(loc_id)
       puts loc_to_look.ships_where_stored

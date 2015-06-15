@@ -12,6 +12,8 @@ module ShipLists
     puts "1 - Look at ships list"
     puts "2 - Look at ship types list"
     puts "3 - Look at ship locations list"
+    puts "4 - Look at all ships in a given type"
+    puts "5 - Look at all ships in a given location"
     puts "9 - Go back"
   end
 
@@ -44,7 +46,7 @@ module ShipLists
     puts "9 - Go back"
   end
   
-  def self.list_choice
+  def self.list_three_choice
     bad_choice = (4..8)
     listchoice = gets.chomp.to_i
     while bad_choice.include?(listchoice) || listchoice > 9 || listchoice == 0
@@ -54,8 +56,18 @@ module ShipLists
     listchoice
   end
   
-  def self.list_choice_three_one
+  def self.list_four_choice
     bad_choice = (5..8)
+    listchoice = gets.chomp.to_i
+    while bad_choice.include?(listchoice) || listchoice > 9 || listchoice == 0      
+      puts "That is not a valid option, please reenter an option"
+      listchoice = gets.chomp.to_i
+    end
+    listchoice
+  end
+  
+  def self.list_five_choice
+    bad_choice = (6..8)
     listchoice = gets.chomp.to_i
     while bad_choice.include?(listchoice) || listchoice > 9 || listchoice == 0      
       puts "That is not a valid option, please reenter an option"
