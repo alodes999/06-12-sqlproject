@@ -74,7 +74,6 @@ while choice != 9
       puts "Ok, what ship type would you like to add?"
       type = gets.chomp
       
-      puts "Ok, adding #{type}!"
       ShipType.add_type(type)
       puts "Alright, type added to the list!"
     when 2
@@ -83,9 +82,8 @@ while choice != 9
       puts "And what station?"
       station = gets.chomp
       
-      puts "Ok, adding #{system}, #{station} to the list!"
       ShipLocation.add_location("#{system}, #{station}")
-      puts "Alright, location added to the list!"
+      puts "Alright, added #{system}, #{station} to the list!"
     when 3
       puts "Ok, what's the ship name would you like to add?"
       name = gets.chomp
@@ -96,7 +94,6 @@ while choice != 9
       puts "And where is this ship located?  Enter the location id number:"
       locid = gets.chomp.to_i
       
-      puts "Ok, adding #{name} to the list!"
       ShipName.add_ship(name, cost, typeid, locid)
       puts "Alright, added #{name} to the list!"
     when 9
