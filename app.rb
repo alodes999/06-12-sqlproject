@@ -2,6 +2,7 @@ require 'sqlite3'
 require_relative 'ship_names'
 require_relative 'ship_types'
 require_relative 'ship_locations'
+require_relative 'lists'
 # EIM is my acronym for 'EVE Inventory Management', the appended project name onto my EVE thought process
 # for the project
 EIM = SQLite3::Database.new('eim.db')
