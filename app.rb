@@ -205,7 +205,6 @@ while choice != 9
       else
         puts "Ok, deletion confirmed! Deleting record #{del_choice}"
         ShipName.delete_ship(del_choice)
-        puts "Ok, deleted record #{del_choice} from the list."
       end
     when 2
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
@@ -222,7 +221,6 @@ while choice != 9
         else
           puts "Ok, deletion confirmed! Deleting record #{del_choice}"
           ShipType.delete_type(del_choice)
-          puts "Ok, deleted record #{del_choice} from the list."
         end
       end
     when 3
@@ -240,7 +238,6 @@ while choice != 9
         else
           puts "Ok, deletion confirmed! Deleting record #{del_choice}"
           ShipLocation.delete_location(del_choice)
-          puts "Ok, deleted record #{del_choice} from the list."
         end
       end
     when 9
