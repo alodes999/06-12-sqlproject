@@ -45,21 +45,41 @@ while choice != 9
     # Our case loop for the submenu for lists.
     case listchoice
     when 1
-      puts ShipName.all
+      list = ShipName.all
+    
+      list.each do |name|
+        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+      end
     when 2
-      puts ShipType.all
+      list = ShipType.all
+      
+      list.each do |type|
+        puts "#{type.type_id} - #{type.shiptype}"
+      end
     when 3
-      puts ShipLocation.all
+      list = ShipLocation.all
+      
+      list.each do |loc|
+        puts "#{loc.loc_id} - #{loc.system_name}"
+      end
     when 4
       puts "What type id should we look up?"
       type_id = gets.chomp.to_i
-      type_to_look = ShipType.new(type_id)
-      puts type_to_look.ships_where_type_matches
+      type_to_look = ShipType.find(type_id)
+      list = type_to_look.ships_where_type_matches
+      
+      list.each do |name|
+        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+      end
     when 5
       puts "What location id should we look up?"
       loc_id = gets.chomp.to_i
-      loc_to_look = ShipLocation.new(loc_id)
-      puts loc_to_look.ships_where_stored
+      loc_to_look = ShipLocation.find(loc_id)
+      list =  loc_to_look.ships_where_stored
+      
+      list.each do |name|
+        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+      end
     when 9
       puts "Ok, back to the top!"
     end
@@ -110,53 +130,58 @@ while choice != 9
     # because there are multiple values that can change.
     case listchoice
     when 1
-      puts "Ok, how would you like to modify a ship entry?"
-      ShipLists.option_three_one
-      listchoice = ShipLists.list_four_choice
-      #Our case logic for this Edit Ships sub-menu
-      case listchoice
-      when 1
-        puts "What's the id of the ship you want to change?"
-        id_to_change = gets.chomp.to_i
-        puts "What's the new ship name?"
-        new_name = gets.chomp
+      loop_choice = yes
+      while loop_choice == yes
+        puts "Ok, how would you like to modify a ship entry?"
+        ShipLists.option_three_one
+        listchoice = ShipLists.list_four_choice
+        #Our case logic for this Edit Ships sub-menu
+        case listchoice
+        when 1
+          puts "What's the id of the ship you want to change?"
+          id_to_change = gets.chomp.to_i
+          puts "What's the new ship name?"
+          new_name = gets.chomp
         
-        puts "Ok, changing name to #{new_name}"
-        ship_to_change = ShipName.new(id_to_change)
-        ship_to_change.change_name(new_name)
-        puts "Alright!  Name changed!"
-      when 2
-        puts "What's the id of the ship you want to change?"
-        id_to_change = gets.chomp.to_i
-        puts "What's the new ship cost?"
-        new_cost = gets.chomp.to_i
+          puts "Ok, changing name to #{new_name}"
+          ship_to_change = ShipName.new(id_to_change)
+          ship_to_change.change_name(new_name)
+          puts "Alright!  Name changed!"
+        when 2
+          puts "What's the id of the ship you want to change?"
+          id_to_change = gets.chomp.to_i
+          puts "What's the new ship cost?"
+          new_cost = gets.chomp.to_i
         
-        puts "Ok, changing cost to #{new_cost}"
-        ship_to_change = ShipName.new(id_to_change)
-        ship_to_change.change_cost(new_cost)
-        puts "Alright!  Cost changed!"
-      when 3
-        puts "What's the id of the ship you want to change?"
-        id_to_change = gets.chomp.to_i
-        puts "What's the id of the new ship type?"
-        new_type = gets.chomp.to_i
+          puts "Ok, changing cost to #{new_cost}"
+          ship_to_change = ShipName.new(id_to_change)
+          ship_to_change.change_cost(new_cost)
+          puts "Alright!  Cost changed!"
+        when 3
+          puts "What's the id of the ship you want to change?"
+          id_to_change = gets.chomp.to_i
+          puts "What's the id of the new ship type?"
+          new_type = gets.chomp.to_i
         
-        puts "Ok, changing type to #{new_type}"
-        ship_to_change = ShipName.new(id_to_change)
-        ship_to_change.change_type(new_type)
-        puts "Alright!  Type changed!"
-      when 4
-        puts "What's the id of the ship you want to change?"
-        id_to_change = gets.chomp.to_i
-        puts "What is the new location id?"
-        new_loc = gets.chomp.to_i
+          puts "Ok, changing type to #{new_type}"
+          ship_to_change = ShipName.new(id_to_change)
+          ship_to_change.change_type(new_type)
+          puts "Alright!  Type changed!"
+        when 4
+          puts "What's the id of the ship you want to change?"
+          id_to_change = gets.chomp.to_i
+          puts "What is the new location id?"
+          new_loc = gets.chomp.to_i
         
-        puts "Ok, changing location to #{new_loc}" 
-        ship_to_change = ShipName.new(id_to_change)
-        ship_to_change.change_location(new_loc)
-        puts "Alright!  Location changed!"
-      when 9
-        puts "Ok, back to the top!"
+          puts "Ok, changing location to #{new_loc}" 
+          ship_to_change = ShipName.new(id_to_change)
+          ship_to_change.change_location(new_loc)
+          puts "Alright!  Location changed!"
+        when 9
+          puts "Ok, back to the top!"
+        end
+      puts "Would you like to make more changes? Please enter yes or no"
+      loop_choice = gets.chomp
       end
     when 2
       puts "Ok, what entry do you want to modify?"

@@ -1,13 +1,24 @@
 class ShipLocation
-  attr_accessor :loc_id
+  attr_accessor :loc_id, :system_name
   # Initializes a ShipLocation object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.
   # 
   # We have 1 attribute
   # => @loc_id - an Integer, that will be used to correlate with the same number id in our table.
-  def initialize(location_id)
+  def initialize(location_id = nil, system_name = nil)
     @loc_id = location_id
+    @system_name = system_name
+  end
+  
+  def self.find(loc_id)
+    @loc_id = loc_id
+    
+    found = EIM.execute("SELECT * FROM ship_locations WHERE id = #{@loc_id};").first
+    
+    temp_name = found['ship_type']
+    
+    ShipLocation.new(loc_id, temp_name)
   end
   # Displays a hash showing all entries into the ship_locations table.
   #
@@ -15,7 +26,14 @@ class ShipLocation
   # 
   # Returns an array of hashes showing all entries in the ship_locations table.
   def self.all
-    EIM.execute("SELECT * FROM ship_locations;")
+    list = EIM.execute("SELECT * FROM ship_locations;")
+    array_list = []
+    
+    list.each do |loc|
+      array_list << ShipLocation.new(loc["id"], loc["solar_system_name"])
+    end
+    
+    array_list
   end
   # Adds a new entry into the ship_locations table
   #
@@ -39,7 +57,14 @@ class ShipLocation
   #
   # Returns a list of ships currently at the location referenced in our @loc_id attribute
   def ships_where_stored
-    EIM.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@loc_id};")
+    list = EIM.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@loc_id};")
+    array_list = []
+    
+    list.each do |type|
+      array_list << ShipName.new(type['id'], type['ship_name'], type['cost'], type['ship_types_id'], type['ship_locations_id'])
+    end
+    
+    array_list
   end
   # Change method.
   # 
