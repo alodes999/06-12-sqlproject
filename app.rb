@@ -45,23 +45,11 @@ while choice != 9
     # Our case loop for the submenu for lists.
     case listchoice
     when 1
-      list = ShipName.all
-    
-      list.each do |name|
-        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
-      end
+      ShipLists.ship_name_list
     when 2
-      list = ShipType.all
-      
-      list.each do |type|
-        puts "#{type.type_id} - #{type.shiptype}"
-      end
+      ShipLists.ship_type_list
     when 3
-      list = ShipLocation.all
-      
-      list.each do |loc|
-        puts "#{loc.loc_id} - #{loc.system_name}"
-      end
+      Shiplists.ship_loc_list
     when 4
       puts "What type id should we look up?"
       type_id = gets.chomp.to_i
@@ -131,11 +119,7 @@ while choice != 9
     case listchoice
     when 1
       puts "Ok, which ship would you like to modify?"
-      list = ShipName.all
-    
-      list.each do |name|
-        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
-      end
+      ShipLists.ship_name_list
       id_to_mod = gets.chomp.to_i
       ship_to_mod = ShipName.find(id_to_mod)
       loop_choice = "yes"
@@ -188,27 +172,33 @@ while choice != 9
       ship_to_mod.update_to_database
       puts "Ok! Updated the ship on the database!"
     when 2
-      puts "Ok, what entry do you want to modify?"
+      type_to_mod = ShipType.new
+      puts "Ok, which ship type do you want to modify?"
+      ShipLists.ship_type_list
       entry_choice = gets.chomp.to_i
+      type_to_mod.find(entry_choice)
+      
       puts "Ok, and what do you want to change the type to?"
       new_type = gets.chomp
       
       puts "Ok, changing the type to #{new_type}!"
-      type_to_change = ShipType.new(entry_choice)
-      type_to_change.change_type(new_type)
-      puts "Ok, that ship type has been changed to #{new_type}!"
+      type_to_mod.shiptype = new_type
+      type_to_mod.save
     when 3
-      puts "Ok, what entry do you want to modify?"
+      loc_to_mod = ShipLocation.new
+      puts "Ok, which location do you want to modify?"
+      ShipLists.ship_loc_list
       entry_choice = gets.chomp.to_i
+      loc_to_mod.find(entry_choice)
+      
       puts "And what do you want to change the system to?"
       new_sys = gets.chomp
       puts "And the station?"
       new_stat = gets.chomp
       
       puts "Ok, changing the type to #{new_sys}, #{new_stat}"
-      loc_to_change = ShipLocation.new(entry_choice)
-      loc_to_change.change_location("#{new_sys}, #{new_stat}")
-      puts "Ok, that location has been changed to #{new_sys}, #{new_stat}!"
+      loc_to_mod.system_name = "#{new_sys}, #{new_stat}"
+      loc_to_mod.save
     when 9
       puts "Ok, back to the top!"
     end

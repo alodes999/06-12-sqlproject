@@ -71,7 +71,7 @@ class ShipLocation
   # Accepts 1 argument, the value_to_change.  This will change the record to the entered value to change.
   # 
   # Returns [], changing the appropriate value for our designated location id
-  def change_location(value_to_change)
-    EIM.execute("UPDATE ship_locations SET solar_system_name = '#{value_to_change}' WHERE id = #{@loc_id};")
+  def save
+    EIM.execute("UPDATE ship_locations SET solar_system_name = '#{@system_name}' WHERE id = #{@loc_id};")
   end
 end

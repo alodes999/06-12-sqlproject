@@ -75,4 +75,29 @@ module ShipLists
     end
     listchoice
   end
+  
+  def ship_name_list
+    list = ShipName.all
+  
+    list.each do |name|
+      puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+    end
+  end
+  
+  def ship_type_list
+    list = ShipType.all
+    
+    list.each do |type|
+      puts "#{type.type_id} - #{type.shiptype}"
+    end
+  end
+  
+  def ship_loc_list
+    list = ShipLocation.all
+    
+    list.each do |loc|
+      puts "#{loc.loc_id} - #{loc.system_name}"
+    end
+  end
+
 end

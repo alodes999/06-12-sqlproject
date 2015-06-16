@@ -65,9 +65,9 @@ class ShipType
     
     array_list
   end
-  # Change method for ship_type.
+  # Update method for ship_type database.
   # 
-  # Accepts 1 arguments, type_change.  This will change the ship_type for the referenced type_id
+  # Accepts no arguments.  This will sync the ship_type in the database for the referenced type_id.
   # 
   # Returns [], changing the ship_type for our designated location id
   def save
