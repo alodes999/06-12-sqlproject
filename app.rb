@@ -52,6 +52,17 @@ while choice != 9
     when 4
       puts "What type id should we look up?"
       type_id = gets.chomp.to_i
+      
+      accept_list = []
+      name_valid = ShipType.all
+      name_valid.each do |thing|
+        accept_list << thing.type_id
+      end
+      
+      while !accept_list.include?(type_id)
+        puts "That is not a valid option, please re-enter a type to look up"
+        type_id = gets.chomp.to_i
+      end
       type_to_look = ShipType.find(type_id)
       list = type_to_look.ships_where_type_matches
       
@@ -61,6 +72,17 @@ while choice != 9
     when 5
       puts "What location id should we look up?"
       loc_id = gets.chomp.to_i
+      
+      accept_list = []
+      name_valid = ShipLocation.all
+      name_valid.each do |thing|
+        accept_list << thing.loc_id
+      end
+      
+      while !accept_list.include?(id_to_mod)
+        puts "That is not a valid option, please re-enter a ship to modify"
+        loc_id = gets.chomp.to_i
+      end
       loc_to_look = ShipLocation.find(loc_id)
       list =  loc_to_look.ships_where_stored
       
@@ -118,6 +140,18 @@ while choice != 9
       puts "Ok, which ship would you like to modify?"
       ShipLists.ship_name_list
       id_to_mod = gets.chomp.to_i
+      
+      accept_list = []
+      name_valid = ShipName.all
+      name_valid.each do |thing|
+        accept_list << thing.name_id
+      end
+      
+      while !accept_list.include?(id_to_mod)
+        puts "That is not a valid option, please re-enter a ship to modify"
+        id_to_mod = gets.chomp.to_i
+      end
+       
       ship_to_mod = ShipName.find(id_to_mod)
       loop_choice = "yes"
       while loop_choice.downcase == "yes"
@@ -164,6 +198,17 @@ while choice != 9
       puts "Ok, which ship type do you want to modify?"
       ShipLists.ship_type_list
       entry_choice = gets.chomp.to_i
+      
+      accept_list = []
+      name_valid = ShipType.all
+      name_valid.each do |thing|
+        accept_list << thing.type_id
+      end
+      
+      while !accept_list.include?(entry_choice)
+        puts "That is not a valid option, please re-enter a ship to modify"
+        entry_choice = gets.chomp.to_i
+      end
       type_to_mod.find(entry_choice)
       
       puts "Ok, and what do you want to change the type to?"
@@ -177,6 +222,17 @@ while choice != 9
       puts "Ok, which location do you want to modify?"
       ShipLists.ship_loc_list
       entry_choice = gets.chomp.to_i
+      
+      accept_list = []
+      name_valid = ShipLocations.all
+      name_valid.each do |thing|
+        accept_list << thing.loc_id
+      end
+      
+      while !accept_list.include?(entry_choice)
+        puts "That is not a valid option, please re-enter a location to modify"
+        entry_choice = gets.chomp.to_i
+      end
       loc_to_mod.find(entry_choice)
       
       puts "And what do you want to change the system to?"
