@@ -80,7 +80,7 @@ while choice != 9
       puts "Ok, what ship type would you like to add?"
       type = gets.chomp
       
-      ShipType.add_type(type)
+      new_type = ShipType.add_type(type)
       puts "Alright, type added to the list!"
     when 2
       puts "Ok, what system would you like to add?"
@@ -88,7 +88,7 @@ while choice != 9
       puts "And what station?"
       station = gets.chomp
       
-      ShipLocation.add_location("#{system}, #{station}")
+      new_loc = ShipLocation.add_location("#{system}, #{station}")
       puts "Alright, added #{system}, #{station} to the list!"
     when 3
       puts "Ok, what's the ship name would you like to add?"
@@ -100,7 +100,7 @@ while choice != 9
       puts "And where is this ship located?  Enter the location id number:"
       locid = gets.chomp.to_i
       
-      ShipName.add_ship(name, cost, typeid, locid)
+      new_ship = ShipName.add_ship(name, cost, typeid, locid)
       puts "Alright, added #{name} to the list!"
     when 9
       puts "Ok, back to the top!"
@@ -139,22 +139,14 @@ while choice != 9
           ship_to_mod.cost = new_cost
         when 3
           puts "Ok, what's the id of the new ship type?"
-          list = ShipType.all
-      
-          list.each do |type|
-            puts "#{type.type_id} - #{type.shiptype}"
-          end
+          ShipType.ship_type_list
           new_type = gets.chomp.to_i
         
           puts "Ok, changing type to #{new_type}!"
           ship_to_mod.type_id = new_type
         when 4
           puts "Ok, what is the new location id?"
-          list = ShipLocation.all
-      
-          list.each do |loc|
-            puts "#{loc.loc_id} - #{loc.system_name}"
-          end
+          ShipType.ship_loc_list
           new_loc = gets.chomp.to_i
         
           puts "Ok, changing location to #{new_loc}!" 
@@ -165,7 +157,7 @@ while choice != 9
       puts "Would you like to make more changes? Please enter yes or no"
       loop_choice = gets.chomp
       end
-      ship_to_mod.update_to_database
+      ship_to_mod.save
       puts "Ok! Updated the ship on the database!"
     when 2
       type_to_mod = ShipType.new

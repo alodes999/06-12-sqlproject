@@ -10,7 +10,12 @@ class ShipLocation
     @loc_id = location_id
     @system_name = system_name
   end
-  
+  # Finding a ship_location row from the given id.  This will fill out a new ShipLocation class
+  # with the attributes pulled from the row values in our table
+  # 
+  # Accepts 1 argument, the Integer of our ship_locations table id
+  # 
+  # Returns a new ShipLocation object
   def self.find(loc_id)
     @loc_id = loc_id
     
@@ -39,9 +44,13 @@ class ShipLocation
   #
   # Accepts 2 arguments, solsysloc, a String for the system name, and stationname, a String for the station in the given system.
   #
-  # Returns [] in our terminal, and adds the row to our ship_locations table.
+  # Returns a new ShipLocation Object, and adds the row to our ship_locations table.
   def self.add_location(solsysloc)
-    EIM.execute("INSERT INTO ship_locations (solar_system_name) VALUES ('#{solsysloc}');")
+    EIM.execute("INSERT INTO ship_locations ('solar_system_name') VALUES ('#{solsysloc}');")
+    
+    location_id = EIM.last_insert_row_id
+    
+    ShipLocation.new(location_id, solsysloc)
   end
   # Instance method for deleting a location
   # 
@@ -49,21 +58,13 @@ class ShipLocation
   # 
   # Calls our ships_where_stored method to verify the location is empty before deletion
   #
-  # Returns 
+  # Returns Boolean
   def delete_location
     if ships_where_stored.empty?
       EIM.execute("DELETE FROM ship_locations WHERE id = #{@loc_id};")
     else
       false
     end
-  end
-  # Deletes a given entry in our ship_locations table
-  # 
-  # Accepts 1 argument, id_to_delete, an Integer value that corresponds to the row id we want to delete
-  # 
-  # Returns [] in our terminal, and deletes the row from our ship_locations table
-  def self.delete(id_to_delete)
-    EIM.execute("DELETE FROM ship_locations WHERE id = #{id_to_delete};")
   end
   # Lists the ships at the location referenced with this object's instantiation
   # 
@@ -80,11 +81,11 @@ class ShipLocation
     
     array_list
   end
-  # Change method.
+  # Syncs our current ShipLocation Object with it's corresponding row in the ship_locations table of our DB
   # 
-  # Accepts 1 argument, the value_to_change.  This will change the record to the entered value to change.
+  # Accepts no arguments, using the instantiated Object's attributes
   # 
-  # Returns [], changing the appropriate value for our designated location id
+  # Returns [], and updates the row in our Database, syncing it with our Object 
   def save
     EIM.execute("UPDATE ship_locations SET solar_system_name = '#{@system_name}' WHERE id = #{@loc_id};")
   end

@@ -7,6 +7,7 @@ module ShipLists
     puts "3 - Change a record"
     puts "4 - Delete a record"
     puts "9 - Quit"
+    puts ""
   end
 
   def self.option_one
@@ -19,6 +20,7 @@ module ShipLists
     puts "4 - Look at all ships in a given type"
     puts "5 - Look at all ships in a given location"
     puts "9 - Go back"
+    puts ""
   end
 
   def self.option_two
@@ -29,6 +31,7 @@ module ShipLists
     puts "2 - Enter a new ship location"
     puts "3 - Enter a new ship"
     puts "9 - Go back"
+    puts ""
   end
 
   def self.option_three
@@ -39,6 +42,7 @@ module ShipLists
     puts "2 - Change a location record"
     puts "3 - Change a ship type record"
     puts "9 - Go back"
+    puts ""
   end
 
   def self.option_three_one
@@ -50,6 +54,7 @@ module ShipLists
     puts "3 - Change a ship type"
     puts "4 - Change a ship location"
     puts "9 - Go back"
+    puts ""
   end
 
   def self.option_four
@@ -60,6 +65,7 @@ module ShipLists
     puts "2 - Delete a ship type"
     puts "3 - Delete a ship location"
     puts "9 - Go back"
+    puts ""
   end
   
   def self.list_three_choice

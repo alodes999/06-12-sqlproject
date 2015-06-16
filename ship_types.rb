@@ -10,7 +10,12 @@ class ShipType
     @type_id = type_id
     @shiptype = shiptype
   end
-  
+  # Finding a ship_type row from the given id.  This will fill out a new ShipType class
+  # with the attributes pulled from the row values in our table
+  # 
+  # Accepts 1 argument, the Integer of our ship_types table id
+  # 
+  # Returns a new ShipType object
   def self.find(type_id)
     @type_id = type_id
     
@@ -38,11 +43,19 @@ class ShipType
   #
   # Accepts 1 argument, a String for the ship_type
   #
-  # Returns [] in our terminal, and adds the row to our ship_types table.
+  # Returns a new ShipType Object, and adds the row to our ship_types table.
   def self.add_type(shiptype)
     EIM.execute("INSERT INTO ship_types (ship_type) VALUES ('#{shiptype}');")
+    
+    ship_id = EIM.last_insert_row_id
+    
+    ShipType.new(ship_id, shiptype)
   end
-  
+  # Deletes a ship type from our ship_type table.
+  # 
+  # Accepts no arguments, using an already instantiated ShipType object to get the id to delete
+  # 
+  # Returns Boolean
   def delete_type
     if ships_where_type_matches.empty?
       EIM.execute("DELETE FROM ship_types WHERE id = #{@type_id};")
@@ -50,19 +63,11 @@ class ShipType
       false
     end
   end
-  # Deletes a given entry in our ship_types table
-  # 
-  # Accepts 1 argument, id_to_delete, an Integer value that corresponds to the row id we want to delete
-  # 
-  # Returns [] in our terminal, and deletes the row from our ship_types table
-  def self.delete(id_to_delete)
-    EIM.execute("DELETE FROM ship_types WHERE id = #{id_to_delete};")
-  end
   # Lists the ships of the type referenced with this object's instantiation
   # 
   # Accepts no arguments, only passing the defined argument from instantiation to this method
   #
-  # Returns a list of ships that are the ship_type referenced in our @loc_id attribute
+  # Returns an Array of ship Objects that are the ship_type referenced in our @type_id attribute
   def ships_where_type_matches
     list = EIM.execute("SELECT * FROM ship_names WHERE ship_types_id = #{@type_id};")
     array_list = []

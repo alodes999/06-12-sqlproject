@@ -13,7 +13,12 @@ class ShipName
     @type_id = type_id
     @loc_id = loc_id
   end
-  
+  # Finding a ship row from the given id.  This will fill out a new ShipName class
+  # with the attributes pulled from the row values in our table
+  # 
+  # Accepts 1 argument, the Integer of our ship_names table id
+  # 
+  # Returns a new ShipName object
   def self.find(name_id)
     @name_id = name_id
   
@@ -45,9 +50,13 @@ class ShipName
   #
   # Accepts 1 argument, a String for the ship_name
   #
-  # Returns [] in our terminal, and adds the row to our ship_names table.
+  # Returns a new ShipName Object, and adds the row to our ship_names table.
   def self.add_ship(shipname, shipcost, type_id, loc_id)
     EIM.execute("INSERT INTO ship_names (ship_name, cost, ship_types_id, ship_locations_id) VALUES ('#{shipname}', #{shipcost}, #{type_id}, #{loc_id});")
+    
+    new_name_id = EIM.last_insert_row_id
+    
+    ShipName.new(new_name_id, shipname, shipcost, type_id, loc_id)
   end
   # Deletes a given entry in our ship_names table
   # 
@@ -57,16 +66,12 @@ class ShipName
   def self.delete_ship(id_to_delete)
     EIM.execute("DELETE FROM ship_names WHERE id = #{id_to_delete};")
   end
-  # Shows the row corresponding to the instantiated id of the object.
-  #
-  # Accepts no arguments
+  # Syncs our current ShipName Object with it's corresponding row in the ship_names table of our DB
   # 
-  # Returns the hash of the row the instantiated id refers to
-  def show_info
-    EIM.execute("SELECT * FROM ship_names WHERE id = @{name_id};")
-  end
-  
-  def update_to_database
+  # Accepts no arguments, using the instantiated Object's attributes
+  # 
+  # Returns [], and updates the row in our Database, syncing it with our Object 
+  def save
     EIM.execute("UPDATE ship_names SET 'ship_name' = '#{@ship_name}', 'cost' = #{@cost}, 'ship_types_id' = #{@type_id}, 'ship_locations_id' = #{@loc_id} WHERE id = #{@name_id};")
   end
 end
