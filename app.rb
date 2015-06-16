@@ -224,13 +224,13 @@ while choice != 9
     when 2
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
       del_choice = gets.chomp.to_i
-      del_type = ShipType.find(del_choice)
-      puts "Ok, deleting ship #{del_choice} from the types table.  Are you sure? Put y or n."
+      type_to_delete = ShipType.find(del_choice)
+      puts "Ok, deleting type #{del_choice} from the types table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
       if dbl_check.downcase != "y"
         puts "Ok, back to the top!"
       else
-        if del_type.delete_name
+        if type_to_delete.delete_type
           puts "Ok, deletion confirmed! Deleting record #{del_choice}"
         else
           puts "There are ships associated with that type.  Please reassign those ships before deleting that type!"
@@ -240,18 +240,17 @@ while choice != 9
     when 3
       puts "Ok, which location would you like to delete? Please enter the id of the ship location:"
       del_choice = gets.chomp.to_i
-      del_ship = ShipLocation.new(del_choice)
-      if del_ship.ships_where_stored.length > 0
-        puts "There are ships associated with that location.  Please reassign those ships before deleting that type!"
-        puts "Returning to the Main Menu"
+      loc_to_delete = ShipLocation.find(del_choice)
+      puts "Ok, deleting location #{del_choice} from the locations table.  Are you sure? Put y or n."
+      dbl_check = gets.chomp
+      if dbl_check.downcase != "y"
+        puts "Ok, back to the top!"
       else
-        puts "Ok, deleting ship #{del_choice} from the locations table.  Are you sure? Put y or n."
-        dbl_check = gets.chomp
-        if dbl_check.downcase != "y"
-          puts "Ok, back to the top!"
-        else
+        if loc_to_delete.delete_location
           puts "Ok, deletion confirmed! Deleting record #{del_choice}"
-          ShipLocation.delete_location(del_choice)
+        else 
+          puts "There are ships associated with that location.  Please reassign those ships before deleting that type!"
+          puts "Returning to the Main Menu."
         end
       end
     when 9

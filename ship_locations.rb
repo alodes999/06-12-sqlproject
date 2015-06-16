@@ -43,12 +43,26 @@ class ShipLocation
   def self.add_location(solsysloc)
     EIM.execute("INSERT INTO ship_locations (solar_system_name) VALUES ('#{solsysloc}');")
   end
+  # Instance method for deleting a location
+  # 
+  # Accepts no arguments, relying on the instantiated object's type_id
+  # 
+  # Calls our ships_where_stored method to verify the location is empty before deletion
+  #
+  # Returns 
+  def delete_location
+    if ships_where_stored.empty?
+      EIM.execute("DELETE FROM ship_locations WHERE id = #{@loc_id};")
+    else
+      false
+    end
+  end
   # Deletes a given entry in our ship_locations table
   # 
   # Accepts 1 argument, id_to_delete, an Integer value that corresponds to the row id we want to delete
   # 
   # Returns [] in our terminal, and deletes the row from our ship_locations table
-  def self.delete_location(id_to_delete)
+  def self.delete(id_to_delete)
     EIM.execute("DELETE FROM ship_locations WHERE id = #{id_to_delete};")
   end
   # Lists the ships at the location referenced with this object's instantiation

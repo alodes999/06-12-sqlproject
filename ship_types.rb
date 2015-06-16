@@ -43,7 +43,7 @@ class ShipType
     EIM.execute("INSERT INTO ship_types (ship_type) VALUES ('#{shiptype}');")
   end
   
-  def delete_name
+  def delete_type
     if ships_where_type_matches.empty?
       EIM.execute("DELETE FROM ship_types WHERE id = #{@type_id};")
     else
@@ -55,7 +55,7 @@ class ShipType
   # Accepts 1 argument, id_to_delete, an Integer value that corresponds to the row id we want to delete
   # 
   # Returns [] in our terminal, and deletes the row from our ship_types table
-  def self.delete_type(id_to_delete)
+  def self.delete(id_to_delete)
     EIM.execute("DELETE FROM ship_types WHERE id = #{id_to_delete};")
   end
   # Lists the ships of the type referenced with this object's instantiation
