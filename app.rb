@@ -130,59 +130,62 @@ while choice != 9
     # because there are multiple values that can change.
     case listchoice
     when 1
-      loop_choice = yes
-      while loop_choice == yes
-        puts "Ok, how would you like to modify a ship entry?"
+      puts "Ok, which ship would you like to modify?"
+      list = ShipName.all
+    
+      list.each do |name|
+        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+      end
+      id_to_mod = gets.chomp.to_i
+      ship_to_mod = ShipName.find(id_to_mod)
+      loop_choice = "yes"
+      while loop_choice.downcase == "yes"
+        puts "Ok, how would you like to modify this ship entry?"
         ShipLists.option_three_one
         listchoice = ShipLists.list_four_choice
         #Our case logic for this Edit Ships sub-menu
         case listchoice
         when 1
-          puts "What's the id of the ship you want to change?"
-          id_to_change = gets.chomp.to_i
-          puts "What's the new ship name?"
+          puts "Ok, what's the new ship name?"
           new_name = gets.chomp
         
-          puts "Ok, changing name to #{new_name}"
-          ship_to_change = ShipName.new(id_to_change)
-          ship_to_change.change_name(new_name)
-          puts "Alright!  Name changed!"
+          puts "Ok, changing name to #{new_name}!"
+          ship_to_mod.ship_name = new_name
         when 2
-          puts "What's the id of the ship you want to change?"
-          id_to_change = gets.chomp.to_i
-          puts "What's the new ship cost?"
+          puts "Ok, what's the new ship cost?"
           new_cost = gets.chomp.to_i
-        
-          puts "Ok, changing cost to #{new_cost}"
-          ship_to_change = ShipName.new(id_to_change)
-          ship_to_change.change_cost(new_cost)
-          puts "Alright!  Cost changed!"
+         
+          puts "Ok, changing cost to #{new_cost}!"
+          ship_to_mod.cost = new_cost
         when 3
-          puts "What's the id of the ship you want to change?"
-          id_to_change = gets.chomp.to_i
-          puts "What's the id of the new ship type?"
+          puts "Ok, what's the id of the new ship type?"
+          list = ShipType.all
+      
+          list.each do |type|
+            puts "#{type.type_id} - #{type.shiptype}"
+          end
           new_type = gets.chomp.to_i
         
-          puts "Ok, changing type to #{new_type}"
-          ship_to_change = ShipName.new(id_to_change)
-          ship_to_change.change_type(new_type)
-          puts "Alright!  Type changed!"
+          puts "Ok, changing type to #{new_type}!"
+          ship_to_mod.type_id = new_type
         when 4
-          puts "What's the id of the ship you want to change?"
-          id_to_change = gets.chomp.to_i
-          puts "What is the new location id?"
+          puts "Ok, what is the new location id?"
+          list = ShipLocation.all
+      
+          list.each do |loc|
+            puts "#{loc.loc_id} - #{loc.system_name}"
+          end
           new_loc = gets.chomp.to_i
         
-          puts "Ok, changing location to #{new_loc}" 
-          ship_to_change = ShipName.new(id_to_change)
-          ship_to_change.change_location(new_loc)
-          puts "Alright!  Location changed!"
+          puts "Ok, changing location to #{new_loc}!" 
+          ship_to_mod.loc_id = new_loc
         when 9
           puts "Ok, back to the top!"
         end
       puts "Would you like to make more changes? Please enter yes or no"
       loop_choice = gets.chomp
       end
+      ship_to_mod.update_to_database
     when 2
       puts "Ok, what entry do you want to modify?"
       entry_choice = gets.chomp.to_i

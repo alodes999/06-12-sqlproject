@@ -24,7 +24,7 @@ class ShipName
     temp_type = found['ship_types_id']
     temp_loc = found['ship_locations_id']
   
-    ShipType.new(type_id, temp_name)
+    ShipName.new(name_id, temp_name, temp_cost, temp_type, temp_loc)
   end
   # Displays a hash showing all entries into the ship_names table.
   #
@@ -65,6 +65,12 @@ class ShipName
   def show_info
     EIM.execute("SELECT * FROM ship_names WHERE id = @{name_id};")
   end
+  
+  def update_to_database
+    EIM.execute("UPDATE ship_names SET 'ship_name' = '#{@ship_name}', 'cost' = #{@cost}, 'ship_types_id' = #{@type_id}, 'ship_locations_id' = #{@loc_id} WHERE id = #{@name_id};")
+  end
+  
+end
   # Generalized change method for the ship_names Class.
   #
   # This method accepts 2 arguments, column_to_change, the name of the column we want to modify
