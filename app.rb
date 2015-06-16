@@ -139,14 +139,14 @@ while choice != 9
           ship_to_mod.cost = new_cost
         when 3
           puts "Ok, what's the id of the new ship type?"
-          ShipType.ship_type_list
+          ShipLists.ship_type_list
           new_type = gets.chomp.to_i
         
           puts "Ok, changing type to #{new_type}!"
           ship_to_mod.type_id = new_type
         when 4
           puts "Ok, what is the new location id?"
-          ShipType.ship_loc_list
+          ShipLists.ship_loc_list
           new_loc = gets.chomp.to_i
         
           puts "Ok, changing location to #{new_loc}!" 
