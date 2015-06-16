@@ -186,6 +186,7 @@ while choice != 9
       loop_choice = gets.chomp
       end
       ship_to_mod.update_to_database
+      puts "Ok! Updated the ship on the database!"
     when 2
       puts "Ok, what entry do you want to modify?"
       entry_choice = gets.chomp.to_i
