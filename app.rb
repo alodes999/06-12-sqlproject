@@ -39,7 +39,6 @@ while choice != 9
   # 
   # We have 5 options, and a further case loop to execute the options for each list option
   when 1
-    puts "Which list would you like to look at?"
     ShipLists.option_one
     listchoice = ShipLists.list_five_choice
     # Our case loop for the submenu for lists.
@@ -49,7 +48,7 @@ while choice != 9
     when 2
       ShipLists.ship_type_list
     when 3
-      Shiplists.ship_loc_list
+      ShipLists.ship_loc_list
     when 4
       puts "What type id should we look up?"
       type_id = gets.chomp.to_i
@@ -73,7 +72,6 @@ while choice != 9
     end
   # Our Entry sub-menu.  Here we define new rows for our tables and insert them  
   when 2
-    puts "What entry would you like to make?"
     ShipLists.option_two
     listchoice = ShipLists.list_three_choice
     # Our case list for our Entry sub-menu
@@ -110,7 +108,6 @@ while choice != 9
   # Here is our Editing sub-menu.  Here we define changes to our list items and send those
   # into our lists
   when 3
-    puts "What would you like to change?"
     ShipLists.option_three
     listchoice = ShipLists.list_three_choice
     # Here is our Edit Ships sub-menu.  We define the ship changes here.
@@ -124,7 +121,6 @@ while choice != 9
       ship_to_mod = ShipName.find(id_to_mod)
       loop_choice = "yes"
       while loop_choice.downcase == "yes"
-        puts "Ok, how would you like to modify this ship entry?"
         ShipLists.option_three_one
         listchoice = ShipLists.list_four_choice
         #Our case logic for this Edit Ships sub-menu
@@ -265,6 +261,7 @@ while choice != 9
   when 9
     puts "To the Main Menu"
   end
+  puts "-------------------------"
   puts "Main Menu"
   ShipLists.main_menu
   

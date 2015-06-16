@@ -1,6 +1,6 @@
 class ShipName
   attr_accessor :name_id, :ship_name, :cost, :type_id, :loc_id
-  # Initializes a ShipName object.  Set with one parameter, the unique "id" of each location.
+  # Initializes a ShipName object.  Set with five optional parameters, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.
   # 

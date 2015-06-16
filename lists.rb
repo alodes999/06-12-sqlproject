@@ -1,6 +1,7 @@
 module ShipLists
 
   def self.main_menu
+    puts "-------------------------"
     puts "1 - Look at a list"
     puts "2 - Enter a new record"
     puts "3 - Change a record"
@@ -9,6 +10,9 @@ module ShipLists
   end
 
   def self.option_one
+    puts "--------------------------------------------"
+    puts "Which list would you like to look at?"
+    puts "--------------------------------------------"
     puts "1 - Look at ships list"
     puts "2 - Look at ship types list"
     puts "3 - Look at ship locations list"
@@ -18,6 +22,9 @@ module ShipLists
   end
 
   def self.option_two
+    puts "-----------------------------------" 
+    puts "What entry would you like to make?"
+    puts "-----------------------------------"    
     puts "1 - Enter a new ship type"
     puts "2 - Enter a new ship location"
     puts "3 - Enter a new ship"
@@ -25,6 +32,9 @@ module ShipLists
   end
 
   def self.option_three
+    puts "--------------------------------"  
+    puts "What would you like to change?"
+    puts "--------------------------------"
     puts "1 - Change a ship record"
     puts "2 - Change a location record"
     puts "3 - Change a ship type record"
@@ -32,6 +42,9 @@ module ShipLists
   end
 
   def self.option_three_one
+    puts "---------------------------------------------------"
+    puts "Ok, how would you like to modify this ship entry?"
+    puts "---------------------------------------------------"
     puts "1 - Change a ship name"
     puts "2 - Change a ship cost"
     puts "3 - Change a ship type"
@@ -40,6 +53,9 @@ module ShipLists
   end
 
   def self.option_four
+    puts "------------------------------------"
+    puts "Ok, what would you like to delete?"
+    puts "------------------------------------"
     puts "1 - Delete a ship record"
     puts "2 - Delete a ship type"
     puts "3 - Delete a ship location"
@@ -76,7 +92,7 @@ module ShipLists
     listchoice
   end
   
-  def ship_name_list
+  def self.ship_name_list
     list = ShipName.all
   
     list.each do |name|
@@ -84,7 +100,7 @@ module ShipLists
     end
   end
   
-  def ship_type_list
+  def self.ship_type_list
     list = ShipType.all
     
     list.each do |type|
@@ -92,7 +108,7 @@ module ShipLists
     end
   end
   
-  def ship_loc_list
+  def self.ship_loc_list
     list = ShipLocation.all
     
     list.each do |loc|
