@@ -224,18 +224,17 @@ while choice != 9
     when 2
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
       del_choice = gets.chomp.to_i
-      del_type = ShipType.new(del_choice)
-      if del_type.ships_where_type_matches.length > 0
-        puts "There are ships associated with that type.  Please reassign those ships before deleting that type!"
-        puts "Returning to the Main Menu."
+      del_type = ShipType.find(del_choice)
+      puts "Ok, deleting ship #{del_choice} from the types table.  Are you sure? Put y or n."
+      dbl_check = gets.chomp
+      if dbl_check.downcase != "y"
+        puts "Ok, back to the top!"
       else
-        puts "Ok, deleting ship #{del_choice} from the types table.  Are you sure? Put y or n."
-        dbl_check = gets.chomp
-        if dbl_check.downcase != "y"
-          puts "Ok, back to the top!"
-        else
+        if del_type.delete_name
           puts "Ok, deletion confirmed! Deleting record #{del_choice}"
-          ShipType.delete_type(del_choice)
+        else
+          puts "There are ships associated with that type.  Please reassign those ships before deleting that type!"
+          puts "Returning to the Main Menu."
         end
       end
     when 3
