@@ -35,7 +35,7 @@ class ShipName
   #
   # Accepts no arguments
   # 
-  # Returns an array of hashes showing all entries in the ship_names table.
+  # Returns an Array of Objects showing all rows in the ship_names table.
   def self.all
     list = EIM.execute("SELECT * FROM ship_names;")
     array_list = []
