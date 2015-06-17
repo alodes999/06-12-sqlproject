@@ -224,7 +224,7 @@ while choice != 9
       entry_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipLocations.all
+      name_valid = ShipLocation.all
       name_valid.each do |thing|
         accept_list << thing.loc_id
       end
@@ -259,8 +259,19 @@ while choice != 9
     case listchoice
     when 1
       puts "Ok, which ship would you like to delete? Please enter the id of the ship:"
+      ShipLists.ship_name_list
       del_choice = gets.chomp.to_i
       
+      accept_list = []
+      name_valid = ShipName.all
+      name_valid.each do |thing|
+        accept_list << thing.name_id
+      end
+      
+      while !accept_list.include?(del_choice)
+        puts "That is not a valid option, please re-enter a location to modify"
+        del_choice = gets.chomp.to_i
+      end
       puts "Ok, deleting ship #{del_choice} from the ships table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
       if dbl_check.downcase != "y"
@@ -271,7 +282,19 @@ while choice != 9
       end
     when 2
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
+      ShipLists.ship_type_list
       del_choice = gets.chomp.to_i
+      
+      accept_list = []
+      name_valid = ShipType.all
+      name_valid.each do |thing|
+        accept_list << thing.type_id
+      end
+      
+      while !accept_list.include?(del_choice)
+        puts "That is not a valid option, please re-enter a location to modify"
+        del_choice = gets.chomp.to_i
+      end
       type_to_delete = ShipType.find(del_choice)
       puts "Ok, deleting type #{del_choice} from the types table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
@@ -287,7 +310,19 @@ while choice != 9
       end
     when 3
       puts "Ok, which location would you like to delete? Please enter the id of the ship location:"
+      ShipLists.ship_loc_list
       del_choice = gets.chomp.to_i
+      
+      accept_list = []
+      name_valid = ShipLocation.all
+      name_valid.each do |thing|
+        accept_list << thing.loc_id
+      end
+      
+      while !accept_list.include?(del_choice)
+        puts "That is not a valid option, please re-enter a location to modify"
+        del_choice = gets.chomp.to_i
+      end
       loc_to_delete = ShipLocation.find(del_choice)
       puts "Ok, deleting location #{del_choice} from the locations table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
