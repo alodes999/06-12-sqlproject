@@ -39,8 +39,8 @@ module ShipLists
     puts "What would you like to change?"
     puts "--------------------------------"
     puts "1 - Change a ship record"
-    puts "2 - Change a location record"
-    puts "3 - Change a ship type record"
+    puts "2 - Change a ship type record"
+    puts "3 - Change a location record"
     puts "9 - Go back"
     puts ""
   end

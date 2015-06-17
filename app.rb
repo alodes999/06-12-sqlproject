@@ -194,7 +194,7 @@ while choice != 9
       ship_to_mod.save
       puts "Ok! Updated the ship on the database!"
     when 2
-      type_to_mod = ShipType.new
+      
       puts "Ok, which ship type do you want to modify?"
       ShipLists.ship_type_list
       entry_choice = gets.chomp.to_i
@@ -209,7 +209,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a ship to modify"
         entry_choice = gets.chomp.to_i
       end
-      type_to_mod.find(entry_choice)
+      type_to_mod = ShipType.find(entry_choice)
       
       puts "Ok, and what do you want to change the type to?"
       new_type = gets.chomp
@@ -218,7 +218,6 @@ while choice != 9
       type_to_mod.shiptype = new_type
       type_to_mod.save
     when 3
-      loc_to_mod = ShipLocation.new
       puts "Ok, which location do you want to modify?"
       ShipLists.ship_loc_list
       entry_choice = gets.chomp.to_i
@@ -233,7 +232,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a location to modify"
         entry_choice = gets.chomp.to_i
       end
-      loc_to_mod.find(entry_choice)
+      loc_to_mod = ShipLocation.find(entry_choice)
       
       puts "And what do you want to change the system to?"
       new_sys = gets.chomp
