@@ -1,7 +1,7 @@
 class ShipType
   extend DatabaseClassMethods
   
-  attr_accessor :id, :shiptype
+  attr_accessor :id, :ship_type
   # Initializes a ShipType object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.
@@ -11,33 +11,6 @@ class ShipType
   def initialize(arguments = {})
     @id = arguments["id"]
     @ship_type = arguments["ship_type"]
-  end
-  # Finding a ship_type row from the given id.  This will fill out a new ShipType class
-  # with the attributes pulled from the row values in our table
-  # 
-  # Accepts 1 argument, the Integer of our ship_types table id
-  # 
-  # Returns a new ShipType object
-  def self.find_from_table(id)
-    @id = id
-    
-    found = self.find(id)
-    
-    temp_name = found['ship_type']
-    
-    ShipType.new(id, temp_name)
-  end
-  # Adds a new entry into the ship_types table
-  #
-  # Accepts 1 argument, a String for the ship_type
-  #
-  # Returns a new ShipType Object, and adds the row to our ship_types table.
-  def self.add_type(shiptype)
-    CONNECTION.execute("INSERT INTO ship_types (ship_type) VALUES ('#{shiptype}');")
-    
-    ship_id = CONNECTION.last_insert_row_id
-    
-    ShipType.new(ship_id, shiptype)
   end
   # Deletes a ship type from our ship_type table.
   # 
@@ -61,7 +34,7 @@ class ShipType
     array_list = []
     
     list.each do |type|
-      array_list << ShipName.new(type['id'], type['ship_name'], type['cost'], type['ship_types_id'], type['ship_locations_id'])
+      array_list << ShipName.new(type)
     end
     
     array_list

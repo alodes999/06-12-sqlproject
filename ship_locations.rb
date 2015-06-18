@@ -12,33 +12,6 @@ class ShipLocation
     @id = arguments["id"]
     @system_name = arguments["solar_system_name"]
   end
-  # Finding a ship_location row from the given id.  This will fill out a new ShipLocation class
-  # with the attributes pulled from the row values in our table
-  # 
-  # Accepts 1 argument, the Integer of our ship_locations table id
-  # 
-  # Returns a new ShipLocation object
-  def self.find_from_table(id)
-    @id = id
-    
-    found = self.find(id)
-    
-    temp_name = found['ship_type']
-    
-    ShipLocation.new(id, temp_name)
-  end
-  # Adds a new entry into the ship_locations table
-  #
-  # Accepts 2 arguments, solsysloc, a String for the system name, and stationname, a String for the station in the given system.
-  #
-  # Returns a new ShipLocation Object, and adds the row to our ship_locations table.
-  def self.add_location(solsysloc)
-    CONNECTION.execute("INSERT INTO ship_locations ('solar_system_name') VALUES ('#{solsysloc}');")
-    
-    location_id = CONNECTION.last_insert_row_id
-    
-    ShipLocation.new(location_id, solsysloc)
-  end
   # Instance method for deleting a location
   # 
   # Accepts no arguments, relying on the instantiated object's type_id
@@ -63,7 +36,7 @@ class ShipLocation
     array_list = []
     
     list.each do |type|
-      array_list << ShipName.new(type['id'], type['ship_name'], type['cost'], type['ship_types_id'], type['ship_locations_id'])
+      array_list << ShipName.new(type)
     end
     
     array_list

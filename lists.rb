@@ -99,7 +99,7 @@ module ShipLists
   end
   
   def self.ship_name_list
-    list = ShipName.all_to_array
+    list = ShipName.all
   
     list.each do |name|
       puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
@@ -107,15 +107,15 @@ module ShipLists
   end
   
   def self.ship_type_list
-    list = ShipType.all_to_array
+    list = ShipType.all
     
     list.each do |type|
-      puts "#{type.id} - #{type.shiptype}"
+      puts "#{type.id} - #{type.ship_type}"
     end
   end
   
   def self.ship_loc_list
-    list = ShipLocation.all_to_array
+    list = ShipLocation.all
     
     list.each do |loc|
       puts "#{loc.id} - #{loc.system_name}"

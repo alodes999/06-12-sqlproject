@@ -56,7 +56,7 @@ while choice != 9
       type_id = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipType.all_to_array
+      name_valid = ShipType.all
       name_valid.each do |thing|
         accept_list << thing.id
       end
@@ -65,7 +65,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a type to look up"
         type_id = gets.chomp.to_i
       end
-      type_to_look = ShipType.find_from_table(type_id)
+      type_to_look = ShipType.find(type_id)
       list = type_to_look.ships_where_type_matches
       
       list.each do |name|
@@ -77,7 +77,7 @@ while choice != 9
       loc_id = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipLocation.all_to_array
+      name_valid = ShipLocation.all
       name_valid.each do |thing|
         accept_list << thing.id
       end
@@ -86,7 +86,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a ship to modify"
         loc_id = gets.chomp.to_i
       end
-      loc_to_look = ShipLocation.find_from_table(loc_id)
+      loc_to_look = ShipLocation.find(loc_id)
       list =  loc_to_look.ships_where_stored
       
       list.each do |name|
@@ -105,7 +105,8 @@ while choice != 9
       puts "Ok, what ship type would you like to add?"
       type = gets.chomp
       
-      new_type = ShipType.add_type(type)
+      add_hash = {"ship_type" => type}
+      new_type = ShipType.add(add_hash)
       puts "Alright, type added to the list!"
     when 2
       puts "Ok, what system would you like to add?"
@@ -113,7 +114,8 @@ while choice != 9
       puts "And what station?"
       station = gets.chomp
       
-      new_loc = ShipLocation.add_location("#{system}, #{station}")
+      add_hash = {"solar_system_name" => "#{system}, #{station}"}
+      new_loc = ShipLocation.add(add_hash)
       puts "Alright, added #{system}, #{station} to the list!"
     when 3
       puts "Ok, what's the ship name would you like to add?"
@@ -125,7 +127,8 @@ while choice != 9
       puts "And where is this ship located?  Enter the location id number:"
       locid = gets.chomp.to_i
       
-      new_ship = ShipName.add_ship(name, cost, typeid, locid)
+      add_hash = {"ship_name" => name, "cost" => cost, "ship_types_id" => typeid, "ship_locations_id" => locid}
+      new_ship = ShipName.add(add_hash)
       puts "Alright, added #{name} to the list!"
     when 9
       puts "Ok, back to the top!"
@@ -145,7 +148,7 @@ while choice != 9
       id_to_mod = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipName.all_to_array
+      name_valid = ShipName.all
       name_valid.each do |thing|
         accept_list << thing.id
       end
@@ -155,7 +158,7 @@ while choice != 9
         id_to_mod = gets.chomp.to_i
       end
        
-      ship_to_mod = ShipName.find_from_table(id_to_mod)
+      ship_to_mod = ShipName.find(id_to_mod)
       loop_choice = "yes"
       while loop_choice.downcase == "yes"
         ShipLists.option_three_one
@@ -203,7 +206,7 @@ while choice != 9
       entry_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipType.all_to_array
+      name_valid = ShipType.all
       name_valid.each do |thing|
         accept_list << thing.id
       end
@@ -212,7 +215,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a ship to modify"
         entry_choice = gets.chomp.to_i
       end
-      type_to_mod = ShipType.find_from_table(entry_choice)
+      type_to_mod = ShipType.find(entry_choice)
       
       puts "Ok, and what do you want to change the type to?"
       new_type = gets.chomp
@@ -226,7 +229,7 @@ while choice != 9
       entry_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipLocation.all_to_array
+      name_valid = ShipLocation.all
       name_valid.each do |thing|
         accept_list << thing.locid    end
       
@@ -234,7 +237,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a location to modify"
         entry_choice = gets.chomp.to_i
       end
-      loc_to_mod = ShipLocation.find_from_table(entry_choice)
+      loc_to_mod = ShipLocation.find(entry_choice)
       
       puts "And what do you want to change the system to?"
       new_sys = gets.chomp
@@ -264,7 +267,7 @@ while choice != 9
       del_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipName.all_to_array
+      name_valid = ShipName.all
       name_valid.each do |thing|
         accept_list << thing.id
       end
@@ -279,7 +282,7 @@ while choice != 9
         puts "Ok, back to the top!"
       else
         puts "Ok, deletion confirmed! Deleting record #{del_choice}"
-        ShipName.delete_ship(del_choice)
+        ShipName.delete(del_choice)
       end
     when 2
       puts "Ok, which type would you like to delete? Please enter the id of the ship type:"
@@ -287,7 +290,7 @@ while choice != 9
       del_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipType.all_to_array
+      name_valid = ShipType.all
       name_valid.each do |thing|
         accept_list << thing.id
       end
@@ -296,7 +299,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a location to modify"
         del_choice = gets.chomp.to_i
       end
-      type_to_delete = ShipType.find_from_table(del_choice)
+      type_to_delete = ShipType.find(del_choice)
       puts "Ok, deleting type #{del_choice} from the types table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
       if dbl_check.downcase != "y"
@@ -315,7 +318,7 @@ while choice != 9
       del_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipLocation.all_to_array
+      name_valid = ShipLocation.all
       name_valid.each do |thing|
         accept_list << thing.locid    end
       
@@ -323,7 +326,7 @@ while choice != 9
         puts "That is not a valid option, please re-enter a location to modify"
         del_choice = gets.chomp.to_i
       end
-      loc_to_delete = ShipLocation.find_from_table(del_choice)
+      loc_to_delete = ShipLocation.find(del_choice)
       puts "Ok, deleting location #{del_choice} from the locations table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
       if dbl_check.downcase != "y"
