@@ -1,14 +1,16 @@
 class ShipType
-  attr_accessor :type_id, :shiptype
+  extend DatabaseClassMethods
+  
+  attr_accessor :id, :shiptype
   # Initializes a ShipType object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.
   # 
   # We have 1 attribute
   # => @loc_id - an Integer, that will be used to correlate with the same number id in our table.
-  def initialize(type_id = nil, shiptype = nil)
-    @type_id = type_id
-    @shiptype = shiptype
+  def initialize(arguments = {})
+    @id = arguments["id"]
+    @ship_type = arguments["ship_type"]
   end
   # Finding a ship_type row from the given id.  This will fill out a new ShipType class
   # with the attributes pulled from the row values in our table
@@ -16,28 +18,14 @@ class ShipType
   # Accepts 1 argument, the Integer of our ship_types table id
   # 
   # Returns a new ShipType object
-  def self.find(type_id)
-    @type_id = type_id
+  def self.find_from_table(id)
+    @id = id
     
-    found = EIM.execute("SELECT * FROM ship_types WHERE id = #{@type_id};").first
+    found = self.find(id)
     
     temp_name = found['ship_type']
     
-    ShipType.new(type_id, temp_name)
-  end
-  # Displays a hash showing all entries into the ship_types table.
-  #
-  # Accepts no arguments
-  # 
-  # Returns an array of hashes showing all entries in the ship_types table.
-  def self.all
-    list = EIM.execute("SELECT * FROM ship_types;")
-    array_list = []
-    
-    list.each do |type|
-      array_list << ShipType.new(type["id"], type["ship_type"])
-    end
-    array_list
+    ShipType.new(id, temp_name)
   end
   # Adds a new entry into the ship_types table
   #
@@ -45,9 +33,9 @@ class ShipType
   #
   # Returns a new ShipType Object, and adds the row to our ship_types table.
   def self.add_type(shiptype)
-    EIM.execute("INSERT INTO ship_types (ship_type) VALUES ('#{shiptype}');")
+    CONNECTION.execute("INSERT INTO ship_types (ship_type) VALUES ('#{shiptype}');")
     
-    ship_id = EIM.last_insert_row_id
+    ship_id = CONNECTION.last_insert_row_id
     
     ShipType.new(ship_id, shiptype)
   end
@@ -58,7 +46,7 @@ class ShipType
   # Returns Boolean
   def delete_type
     if ships_where_type_matches.empty?
-      EIM.execute("DELETE FROM ship_types WHERE id = #{@type_id};")
+      CONNECTION.execute("DELETE FROM ship_types WHERE id = #{@id};")
     else
       false
     end
@@ -67,9 +55,9 @@ class ShipType
   # 
   # Accepts no arguments, only passing the defined argument from instantiation to this method
   #
-  # Returns an Array of ship Objects that are the ship_type referenced in our @type_id attribute
+  # Returns an Array of ship Objects that are the ship_type referenced in our @id attribute
   def ships_where_type_matches
-    list = EIM.execute("SELECT * FROM ship_names WHERE ship_types_id = #{@type_id};")
+    list = CONNECTION.execute("SELECT * FROM ship_names WHERE ship_types_id = #{@id};")
     array_list = []
     
     list.each do |type|
@@ -80,10 +68,10 @@ class ShipType
   end
   # Update method for ship_type database.
   # 
-  # Accepts no arguments.  This will sync the ship_type in the database for the referenced type_id.
+  # Accepts no arguments.  This will sync the ship_type in the database for the referenced id.
   # 
   # Returns [], changing the ship_type for our designated location id
   def save
-    EIM.execute("UPDATE ship_types SET ship_type = '#{shiptype}' WHERE id = #{@type_id};")
+    CONNECTION.execute("UPDATE ship_types SET ship_type = '#{shiptype}' WHERE id = #{@id};")
   end
 end

@@ -1,14 +1,16 @@
 class ShipLocation
-  attr_accessor :loc_id, :system_name
+  extend DatabaseClassMethods
+  
+  attr_accessor :id, :system_name
   # Initializes a ShipLocation object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.
   # 
   # We have 1 attribute
-  # => @loc_id - an Integer, that will be used to correlate with the same number id in our table.
-  def initialize(location_id = nil, system_name = nil)
-    @loc_id = location_id
-    @system_name = system_name
+  # => @id - an Integer, that will be used to correlate with the same number id in our table.
+  def initialize(arguments = {})
+    @id = arguments["id"]
+    @system_name = arguments["solar_system_name"]
   end
   # Finding a ship_location row from the given id.  This will fill out a new ShipLocation class
   # with the attributes pulled from the row values in our table
@@ -16,29 +18,14 @@ class ShipLocation
   # Accepts 1 argument, the Integer of our ship_locations table id
   # 
   # Returns a new ShipLocation object
-  def self.find(loc_id)
-    @loc_id = loc_id
+  def self.find_from_table(id)
+    @id = id
     
-    found = EIM.execute("SELECT * FROM ship_locations WHERE id = #{@loc_id};").first
+    found = self.find(id)
     
     temp_name = found['ship_type']
     
-    ShipLocation.new(loc_id, temp_name)
-  end
-  # Displays a hash showing all entries into the ship_locations table.
-  #
-  # Accepts no arguments
-  # 
-  # Returns an array of hashes showing all entries in the ship_locations table.
-  def self.all
-    list = EIM.execute("SELECT * FROM ship_locations;")
-    array_list = []
-    
-    list.each do |loc|
-      array_list << ShipLocation.new(loc["id"], loc["solar_system_name"])
-    end
-    
-    array_list
+    ShipLocation.new(id, temp_name)
   end
   # Adds a new entry into the ship_locations table
   #
@@ -46,9 +33,9 @@ class ShipLocation
   #
   # Returns a new ShipLocation Object, and adds the row to our ship_locations table.
   def self.add_location(solsysloc)
-    EIM.execute("INSERT INTO ship_locations ('solar_system_name') VALUES ('#{solsysloc}');")
+    CONNECTION.execute("INSERT INTO ship_locations ('solar_system_name') VALUES ('#{solsysloc}');")
     
-    location_id = EIM.last_insert_row_id
+    location_id = CONNECTION.last_insert_row_id
     
     ShipLocation.new(location_id, solsysloc)
   end
@@ -61,7 +48,7 @@ class ShipLocation
   # Returns Boolean
   def delete_location
     if ships_where_stored.empty?
-      EIM.execute("DELETE FROM ship_locations WHERE id = #{@loc_id};")
+      CONNECTION.execute("DELETE FROM ship_locations WHERE id = #{@id};")
     else
       false
     end
@@ -70,9 +57,9 @@ class ShipLocation
   # 
   # Accepts no arguments, only passing the defined argument from instantiation to this method
   #
-  # Returns a list of ships currently at the location referenced in our @loc_id attribute
+  # Returns a list of ships currently at the location referenced in our @id attribute
   def ships_where_stored
-    list = EIM.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@loc_id};")
+    list = CONNECTION.execute("SELECT * FROM ship_names WHERE ship_locations_id = #{@id};")
     array_list = []
     
     list.each do |type|
@@ -87,6 +74,6 @@ class ShipLocation
   # 
   # Returns [], and updates the row in our Database, syncing it with our Object 
   def save
-    EIM.execute("UPDATE ship_locations SET solar_system_name = '#{@system_name}' WHERE id = #{@loc_id};")
+    CONNECTION.execute("UPDATE ship_locations SET solar_system_name = '#{@system_name}' WHERE id = #{@id};")
   end
 end

@@ -1,17 +1,18 @@
 require 'sqlite3'
+require_relative 'database_class_methods'
 require_relative 'ship_names'
 require_relative 'ship_types'
 require_relative 'ship_locations'
 require_relative 'lists'
-# EIM is my acronym for 'EVE Inventory Management', the appended project name onto my EVE thought process
+# CONNECTION is my acronym for 'EVE Inventory Management', the appended project name onto my EVE thought process
 # for the project
-EIM = SQLite3::Database.new('eim.db')
+CONNECTION = SQLite3::Database.new('eim.db')
 
-EIM.execute("CREATE TABLE IF NOT EXISTS ship_names (id INTEGER PRIMARY KEY, ship_name TEXT, cost INTEGER, ship_types_id INTEGER, ship_locations_id INTEGER, FOREIGN KEY(ship_types_id) REFERENCES ship_types(id) , FOREIGN KEY(ship_locations_id) REFERENCES ship_locations(id));")
-EIM.execute("CREATE TABLE IF NOT EXISTS ship_types (id INTEGER PRIMARY KEY, ship_type TEXT);")
-EIM.execute("CREATE TABLE IF NOT EXISTS ship_locations (id INTEGER PRIMARY KEY, solar_system_name TEXT);")
+CONNECTION.execute("CREATE TABLE IF NOT EXISTS ship_names (id INTEGER PRIMARY KEY, ship_name TEXT, cost INTEGER, ship_types_id INTEGER, ship_locations_id INTEGER, FOREIGN KEY(ship_types_id) REFERENCES ship_types(id) , FOREIGN KEY(ship_locations_id) REFERENCES ship_locations(id));")
+CONNECTION.execute("CREATE TABLE IF NOT EXISTS ship_types (id INTEGER PRIMARY KEY, ship_type TEXT);")
+CONNECTION.execute("CREATE TABLE IF NOT EXISTS ship_locations (id INTEGER PRIMARY KEY, solar_system_name TEXT);")
 
-EIM.results_as_hash = true
+CONNECTION.results_as_hash = true
 
 # `````````````````````````````````````````````````````````````````````````````````````````````````````
 # Here I set a variable with ranges to check later in our main while loop
@@ -51,43 +52,45 @@ while choice != 9
       ShipLists.ship_loc_list
     when 4
       puts "What type id should we look up?"
+      ShipLists.ship_type_list
       type_id = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipType.all
+      name_valid = ShipType.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.type_id
+        accept_list << thing.id
       end
       
       while !accept_list.include?(type_id)
         puts "That is not a valid option, please re-enter a type to look up"
         type_id = gets.chomp.to_i
       end
-      type_to_look = ShipType.find(type_id)
+      type_to_look = ShipType.find_from_table(type_id)
       list = type_to_look.ships_where_type_matches
       
       list.each do |name|
-        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+        puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
       end
     when 5
       puts "What location id should we look up?"
+      ShipLists.ship_loc_list
       loc_id = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipLocation.all
+      name_valid = ShipLocation.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.loc_id
+        accept_list << thing.id
       end
       
-      while !accept_list.include?(id_to_mod)
+      while !accept_list.include?(loc_id)
         puts "That is not a valid option, please re-enter a ship to modify"
         loc_id = gets.chomp.to_i
       end
-      loc_to_look = ShipLocation.find(loc_id)
+      loc_to_look = ShipLocation.find_from_table(loc_id)
       list =  loc_to_look.ships_where_stored
       
       list.each do |name|
-        puts "#{name.name_id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+        puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
       end
     when 9
       puts "Ok, back to the top!"
@@ -142,9 +145,9 @@ while choice != 9
       id_to_mod = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipName.all
+      name_valid = ShipName.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.name_id
+        accept_list << thing.id
       end
       
       while !accept_list.include?(id_to_mod)
@@ -152,7 +155,7 @@ while choice != 9
         id_to_mod = gets.chomp.to_i
       end
        
-      ship_to_mod = ShipName.find(id_to_mod)
+      ship_to_mod = ShipName.find_from_table(id_to_mod)
       loop_choice = "yes"
       while loop_choice.downcase == "yes"
         ShipLists.option_three_one
@@ -200,16 +203,16 @@ while choice != 9
       entry_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipType.all
+      name_valid = ShipType.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.type_id
+        accept_list << thing.id
       end
       
       while !accept_list.include?(entry_choice)
         puts "That is not a valid option, please re-enter a ship to modify"
         entry_choice = gets.chomp.to_i
       end
-      type_to_mod = ShipType.find(entry_choice)
+      type_to_mod = ShipType.find_from_table(entry_choice)
       
       puts "Ok, and what do you want to change the type to?"
       new_type = gets.chomp
@@ -223,16 +226,15 @@ while choice != 9
       entry_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipLocation.all
+      name_valid = ShipLocation.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.loc_id
-      end
+        accept_list << thing.locid    end
       
       while !accept_list.include?(entry_choice)
         puts "That is not a valid option, please re-enter a location to modify"
         entry_choice = gets.chomp.to_i
       end
-      loc_to_mod = ShipLocation.find(entry_choice)
+      loc_to_mod = ShipLocation.find_from_table(entry_choice)
       
       puts "And what do you want to change the system to?"
       new_sys = gets.chomp
@@ -262,9 +264,9 @@ while choice != 9
       del_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipName.all
+      name_valid = ShipName.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.name_id
+        accept_list << thing.id
       end
       
       while !accept_list.include?(del_choice)
@@ -285,16 +287,16 @@ while choice != 9
       del_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipType.all
+      name_valid = ShipType.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.type_id
+        accept_list << thing.id
       end
       
       while !accept_list.include?(del_choice)
         puts "That is not a valid option, please re-enter a location to modify"
         del_choice = gets.chomp.to_i
       end
-      type_to_delete = ShipType.find(del_choice)
+      type_to_delete = ShipType.find_from_table(del_choice)
       puts "Ok, deleting type #{del_choice} from the types table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
       if dbl_check.downcase != "y"
@@ -313,16 +315,15 @@ while choice != 9
       del_choice = gets.chomp.to_i
       
       accept_list = []
-      name_valid = ShipLocation.all
+      name_valid = ShipLocation.all_to_array
       name_valid.each do |thing|
-        accept_list << thing.loc_id
-      end
+        accept_list << thing.locid    end
       
       while !accept_list.include?(del_choice)
         puts "That is not a valid option, please re-enter a location to modify"
         del_choice = gets.chomp.to_i
       end
-      loc_to_delete = ShipLocation.find(del_choice)
+      loc_to_delete = ShipLocation.find_from_table(del_choice)
       puts "Ok, deleting location #{del_choice} from the locations table.  Are you sure? Put y or n."
       dbl_check = gets.chomp
       if dbl_check.downcase != "y"
