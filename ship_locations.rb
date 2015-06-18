@@ -1,16 +1,18 @@
 class ShipLocation
   extend DatabaseClassMethods
+  include DatabaseInstanceMethods
   
   attr_accessor :id, :system_name
   # Initializes a ShipLocation object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.
   # 
-  # We have 1 attribute
-  # => @id - an Integer, that will be used to correlate with the same number id in our table.
+  # We have 2 attributes   - id, the table id number referenced with the Object
+  #                        - solar_system_name, a String with the solar system name.
+  # 
   def initialize(arguments = {})
     @id = arguments["id"]
-    @system_name = arguments["solar_system_name"]
+    @solar_system_name = arguments["solar_system_name"]
   end
   # Instance method for deleting a location
   # 
@@ -40,13 +42,5 @@ class ShipLocation
     end
     
     array_list
-  end
-  # Syncs our current ShipLocation Object with it's corresponding row in the ship_locations table of our DB
-  # 
-  # Accepts no arguments, using the instantiated Object's attributes
-  # 
-  # Returns [], and updates the row in our Database, syncing it with our Object 
-  def save
-    CONNECTION.execute("UPDATE ship_locations SET solar_system_name = '#{@system_name}' WHERE id = #{@id};")
   end
 end

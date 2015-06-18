@@ -102,7 +102,7 @@ module ShipLists
     list = ShipName.all
   
     list.each do |name|
-      puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+      puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.ship_types_id} - #{name.ship_locations_id}"
     end
   end
   
@@ -118,7 +118,7 @@ module ShipLists
     list = ShipLocation.all
     
     list.each do |loc|
-      puts "#{loc.id} - #{loc.system_name}"
+      puts "#{loc.id} - #{loc.solar_system_name}"
     end
   end
 

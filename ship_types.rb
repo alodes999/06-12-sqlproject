@@ -1,5 +1,6 @@
 class ShipType
   extend DatabaseClassMethods
+  include DatabaseInstanceMethods
   
   attr_accessor :id, :ship_type
   # Initializes a ShipType object.  Set with one parameter, the unique "id" of each location.
@@ -38,13 +39,5 @@ class ShipType
     end
     
     array_list
-  end
-  # Update method for ship_type database.
-  # 
-  # Accepts no arguments.  This will sync the ship_type in the database for the referenced id.
-  # 
-  # Returns [], changing the ship_type for our designated location id
-  def save
-    CONNECTION.execute("UPDATE ship_types SET ship_type = '#{shiptype}' WHERE id = #{@id};")
   end
 end
