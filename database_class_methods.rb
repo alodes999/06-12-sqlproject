@@ -24,7 +24,9 @@ module DatabaseClassMethods
   # 
   # Returns an Object synced with the matching row in the calling Class's table.
   def find(id)
-    result = CONNECTION.execute("SELECT * FROM ship_names WHERE id = #{id};").first
+    table_name = self.to_s.tableize
+    
+    result = CONNECTION.execute("SELECT * FROM #{table_name} WHERE id = #{id};").first
     
     self.new(result)
   end

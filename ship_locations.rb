@@ -2,7 +2,7 @@ class ShipLocation
   extend DatabaseClassMethods
   include DatabaseInstanceMethods
   
-  attr_accessor :id, :system_name
+  attr_accessor :id, :solar_system_name
   # Initializes a ShipLocation object.  Set with one parameter, the unique "id" of each location.
   # 
   # Our class methods are listed at the top, prefaced with self.  They are able to be called without an instantiated object.

@@ -70,7 +70,7 @@ while choice != 9
       list = type_to_look.ships_where_type_matches
       
       list.each do |name|
-        puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+        puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.ship_types_id} - #{name.ship_locations_id}"
       end
     when 5
       puts "What location id should we look up?"
@@ -91,7 +91,7 @@ while choice != 9
       list =  loc_to_look.ships_where_stored
       
       list.each do |name|
-        puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.type_id} - #{name.loc_id}"
+        puts "#{name.id} - #{name.ship_name} - #{name.cost} - #{name.ship_types_id} - #{name.ship_locations_id}"
       end
     when 9
       puts "Ok, back to the top!"
@@ -184,14 +184,14 @@ while choice != 9
           new_type = gets.chomp.to_i
         
           puts "Ok, changing type to #{new_type}!"
-          ship_to_mod.type_id = new_type
+          ship_to_mod.ship_types_id = new_type
         when 4
           puts "Ok, what is the new location id?"
           ShipLists.ship_loc_list
           new_loc = gets.chomp.to_i
         
           puts "Ok, changing location to #{new_loc}!" 
-          ship_to_mod.loc_id = new_loc
+          ship_to_mod.ship_locations_id = new_loc
         when 9
           puts "Ok, back to the top!"
         end
@@ -201,7 +201,6 @@ while choice != 9
       ship_to_mod.save
       puts "Ok! Updated the ship on the database!"
     when 2
-      
       puts "Ok, which ship type do you want to modify?"
       ShipLists.ship_type_list
       entry_choice = gets.chomp.to_i
@@ -222,7 +221,7 @@ while choice != 9
       new_type = gets.chomp
       
       puts "Ok, changing the type to #{new_type}!"
-      type_to_mod.shiptype = new_type
+      type_to_mod.ship_type = new_type
       type_to_mod.save
     when 3
       puts "Ok, which location do you want to modify?"
@@ -232,7 +231,7 @@ while choice != 9
       accept_list = []
       name_valid = ShipLocation.all
       name_valid.each do |thing|
-        accept_list << thing.locid    end
+        accept_list << thing.id    end
       
       while !accept_list.include?(entry_choice)
         puts "That is not a valid option, please re-enter a location to modify"
@@ -246,7 +245,7 @@ while choice != 9
       new_stat = gets.chomp
       
       puts "Ok, changing the type to #{new_sys}, #{new_stat}"
-      loc_to_mod.system_name = "#{new_sys}, #{new_stat}"
+      loc_to_mod.solar_system_name = "#{new_sys}, #{new_stat}"
       loc_to_mod.save
     when 9
       puts "Ok, back to the top!"
@@ -321,7 +320,8 @@ while choice != 9
       accept_list = []
       name_valid = ShipLocation.all
       name_valid.each do |thing|
-        accept_list << thing.locid    end
+        accept_list << thing.id    
+      end
       
       while !accept_list.include?(del_choice)
         puts "That is not a valid option, please re-enter a location to modify"
